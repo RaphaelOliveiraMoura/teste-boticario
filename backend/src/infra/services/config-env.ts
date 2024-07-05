@@ -1,8 +1,8 @@
 import "dotenv/config";
 
-import { ConfigService, EnvType } from "@/domain/services/config";
+import { IConfigService, EnvType } from "@/domain/services/config";
 
-export class ConfigEnvService implements ConfigService {
+export class ConfigEnvService implements IConfigService {
   get(key: keyof EnvType): string {
     const value = process.env[key];
 

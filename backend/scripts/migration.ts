@@ -1,16 +1,10 @@
-import { readFile } from "fs/promises";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import { DbConnection } from "@/main/services/db-connection";
+import { fileSystem } from "@/main/services/file-system";
 
-import { DrizzleConnection } from "../src/infra/db/drizzle/connection";
-
-const currentDir = dirname(fileURLToPath(import.meta.url));
-
-const ddlSqlPath = path.resolve(currentDir, "ddl.sql");
-
-readFile(ddlSqlPath, "utf-8")
+fileSystem
+  .readFile(fileSystem.resolvePath("ddl.sql", import.meta))
   .then((ddlSql) =>
-    DrizzleConnection.getInstance()
+    DbConnection.getInstance()
       .rawQuery(ddlSql)
       .then(() => console.info("Script executado com sucesso")),
   )

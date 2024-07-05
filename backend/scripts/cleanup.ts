@@ -1,6 +1,6 @@
-import { DrizzleConnection } from "../src/infra/db/drizzle/connection";
+import { DbConnection } from "@/main/services/db-connection";
 
-DrizzleConnection.getInstance()
+DbConnection.getInstance()
   .rawQuery(
     `
       DROP SCHEMA public CASCADE;
@@ -8,4 +8,4 @@ DrizzleConnection.getInstance()
     `,
   )
   .then(() => console.info("Banco de dados restaurado com sucesso"))
-  .catch((err) => console.error("Erro ao executar script", err));
+  .catch((err: Error) => console.error("Erro ao executar script", err));

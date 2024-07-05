@@ -10,8 +10,10 @@
     "build": "rm -rf dist && tsc -p tsconfig-prod.json",
     "lint": "eslint ./src",
     "db:migrate": "tsx ./scripts/migration.ts",
+    "db:seed": "tsx ./scripts/seed.ts",
     "db:cleanup": "tsx ./scripts/cleanup.ts",
-    "db:schema:pull": "drizzle-kit introspect --config src/infra/db/drizzle/drizzle.config.ts"
+    "db:schema:pull": "drizzle-kit introspect --config src/infra/db/drizzle/drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config src/infra/db/drizzle/drizzle.config.ts"
   },
   "keywords": [],
   "author": "Raphael de Oliveira Moura",

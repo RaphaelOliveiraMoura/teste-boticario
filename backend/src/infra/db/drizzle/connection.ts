@@ -1,6 +1,6 @@
-import { ConfigEnvService } from "infra/services/config-env";
-
 import pg from "pg";
+
+import { ConfigEnvService } from "@/infra/services/config-env";
 
 export class DrizzleConnection {
   private static instance: DrizzleConnection;

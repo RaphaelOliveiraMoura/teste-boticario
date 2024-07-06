@@ -3,45 +3,17 @@ import {
   ListClientDto,
   IClientDataSource,
 } from "@/domain/data-sources/client";
-import { Client } from "@/domain/entities/client";
 
 export class ClientDataSoruceMemory implements IClientDataSource {
-  storage = [] as Client[];
+  storage = [] as InspectClientDto[];
 
   async inspect(id: string): Promise<InspectClientDto | null> {
-    const client = this.storage.find(({ props }) => props.id === id);
-
+    const client = this.storage.find((client) => client.id === id);
     if (!client) return null;
-
-    return {
-      id: client.props.id,
-      email: client.props.email.value,
-      username: client.props.username,
-      name: client.props.name,
-      cpf: client.props.cpf.value,
-      phone: client.props.phone.value,
-      birthDate: client.props.birthDate.toISOString(),
-      address: {
-        cep: client.props.address?.props.cep ?? "",
-        state: client.props.address?.props.state ?? "",
-        city: client.props.address?.props.city ?? "",
-        neighborhood: client.props.address?.props.neighborhood ?? "",
-        address: client.props.address?.props.address ?? "",
-        number: client.props.address?.props.number ?? "",
-        complement: client.props.address?.props.complement ?? "",
-      },
-    };
+    return client;
   }
 
   async list(): Promise<ListClientDto[]> {
-    return this.storage.map((client) => ({
-      id: client.props.id,
-      email: client.props.email.value,
-      username: client.props.username,
-      name: client.props.name,
-      cpf: client.props.cpf.value,
-      phone: client.props.phone.value,
-      birthDate: client.props.birthDate.toISOString(),
-    }));
+    return this.storage;
   }
 }

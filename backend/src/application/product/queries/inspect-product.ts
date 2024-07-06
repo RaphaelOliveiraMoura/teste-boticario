@@ -1,7 +1,10 @@
 import { ProductNotFoundError } from "../errors/not-foud";
 
 import { UseCase } from "@/application";
-import { IProductDataSource } from "@/domain/data-sources/product";
+import {
+  IProductDataSource,
+  InspectProductDto,
+} from "@/domain/data-sources/product";
 
 export class InspectProductQuery implements UseCase<Input, Output> {
   constructor(private readonly productDataSource: IProductDataSource) {}
@@ -21,8 +24,4 @@ interface Input {
   id: string;
 }
 
-interface Output {
-  id: string;
-  name: string;
-  description: string;
-}
+type Output = InspectProductDto;

@@ -3,38 +3,17 @@ import {
   ListProductDto,
   IProductDataSource,
 } from "@/domain/data-sources/product";
-import { Product } from "@/domain/entities/product";
 
 export class ProductDataSoruceMemory implements IProductDataSource {
-  storage = [] as Product[];
+  storage = [] as InspectProductDto[];
 
   async inspect(id: string): Promise<InspectProductDto | null> {
-    const product = this.storage.find(({ props }) => props.id === id);
-
+    const product = this.storage.find((product) => product.id === id);
     if (!product) return null;
-
-    return {
-      id: product.props.id,
-      name: product.props.name,
-      description: product.props.description,
-      image: product.props.image,
-      price: product.props.price,
-      stock: product.props.stock,
-      createdAt: product.props.createdAt,
-      category: product.props.category.props.name,
-    };
+    return product;
   }
 
   async list(): Promise<ListProductDto[]> {
-    return this.storage.map((product) => ({
-      id: product.props.id,
-      name: product.props.name,
-      description: product.props.description,
-      image: product.props.image,
-      price: product.props.price,
-      stock: product.props.stock,
-      createdAt: product.props.createdAt,
-      category: product.props.category.props.name,
-    }));
+    return this.storage;
   }
 }

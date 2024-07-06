@@ -3,8 +3,6 @@ import { describe, expect, it, vi } from "vitest";
 import { InspectProductQuery } from "./inspect-product";
 import { ProductNotFoundError } from "../errors/not-foud";
 
-import { Category } from "@/domain/entities/category";
-import { Product } from "@/domain/entities/product";
 import { ProductDataSoruceMemory } from "@/infra/db/memory/product-data-source";
 
 describe("InspectProductQuery", () => {
@@ -14,7 +12,7 @@ describe("InspectProductQuery", () => {
     const sut = new InspectProductQuery(dataSource);
 
     dataSource.storage = [
-      new Product({
+      {
         id: "1",
         name: "product name",
         description: "product description",
@@ -22,12 +20,8 @@ describe("InspectProductQuery", () => {
         stock: 100,
         image: "product image",
         createdAt: new Date(),
-        category: new Category({
-          id: "1",
-          name: "category name",
-          description: "category description",
-        }),
-      }),
+        category: "category name",
+      },
     ];
 
     const inspectSpy = vi.spyOn(dataSource, "inspect");
@@ -54,7 +48,7 @@ describe("InspectProductQuery", () => {
     const sut = new InspectProductQuery(dataSource);
 
     dataSource.storage = [
-      new Product({
+      {
         id: "1",
         name: "product name",
         description: "product description",
@@ -62,12 +56,8 @@ describe("InspectProductQuery", () => {
         stock: 100,
         image: "product image",
         createdAt: new Date(),
-        category: new Category({
-          id: "1",
-          name: "category name",
-          description: "category description",
-        }),
-      }),
+        category: "category name",
+      },
     ];
 
     const input = { id: "2" };

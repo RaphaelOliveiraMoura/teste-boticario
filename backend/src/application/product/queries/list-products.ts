@@ -1,5 +1,8 @@
 import { UseCase } from "@/application";
-import { IProductDataSource } from "@/domain/data-sources/product";
+import {
+  IProductDataSource,
+  ListProductDto,
+} from "@/domain/data-sources/product";
 
 export class ListProductsQuery implements UseCase<undefined, Output> {
   constructor(private readonly productDataSource: IProductDataSource) {}
@@ -9,8 +12,4 @@ export class ListProductsQuery implements UseCase<undefined, Output> {
   }
 }
 
-type Output = {
-  id: string;
-  name: string;
-  description: string;
-}[];
+type Output = ListProductDto[];

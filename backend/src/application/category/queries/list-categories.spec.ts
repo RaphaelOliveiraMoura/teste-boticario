@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ListCategoriesQuery } from "./list-categories";
 
-import { Category } from "@/domain/entities/category";
 import { CategoryDataSoruceMemory } from "@/infra/db/memory/category-data-source";
 
 describe("ListCategoriesQuery", () => {
@@ -12,21 +11,21 @@ describe("ListCategoriesQuery", () => {
     const sut = new ListCategoriesQuery(dataSource);
 
     dataSource.storage = [
-      new Category({
+      {
         id: "1",
         name: "Categoria 1",
         description: "Descricao 1",
-      }),
-      new Category({
+      },
+      {
         id: "2",
         name: "Categoria 2",
         description: "Descricao 2",
-      }),
-      new Category({
+      },
+      {
         id: "3",
         name: "Categoria 3",
         description: "Descricao 3",
-      }),
+      },
     ];
 
     const listSpy = vi.spyOn(dataSource, "list");

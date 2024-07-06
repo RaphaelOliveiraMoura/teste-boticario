@@ -4,14 +4,15 @@ import { DbConnectionDrizzleService } from "../db-connection";
 import { schema } from "../schema";
 
 import {
-  CategoryDto,
+  InspectCategoryDto,
+  ListCategoryDto,
   ICategoryDataSource,
 } from "@/domain/data-sources/category";
 
 export class CategoryDrizzleDataSource implements ICategoryDataSource {
   private drizzle = DbConnectionDrizzleService.getInstance().drizzle();
 
-  async inspect(id: string): Promise<CategoryDto | null> {
+  async inspect(id: string): Promise<InspectCategoryDto | null> {
     const [result] = await this.drizzle
       .select()
       .from(schema.categoria)
@@ -27,7 +28,7 @@ export class CategoryDrizzleDataSource implements ICategoryDataSource {
     };
   }
 
-  async list(): Promise<CategoryDto[]> {
+  async list(): Promise<ListCategoryDto[]> {
     const results = await this.drizzle.select().from(schema.categoria);
 
     return results.map((result) => ({

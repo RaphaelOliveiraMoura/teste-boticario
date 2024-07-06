@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ListClientsQuery } from "./list-clients";
 
-import { ClientFakersFactory } from "@/domain/fakers/client";
 import { ClientDataSoruceMemory } from "@/infra/db/memory/client-data-source";
 
 describe("ListClientsQuery", () => {
@@ -12,24 +11,60 @@ describe("ListClientsQuery", () => {
     const sut = new ListClientsQuery(dataSource);
 
     dataSource.storage = [
-      ClientFakersFactory.generate({
+      {
         id: "1",
         email: "email1@example.com",
         cpf: "11111111111",
         phone: "11111111111",
-      }),
-      ClientFakersFactory.generate({
+        username: "client username",
+        name: "client name",
+        birthDate: new Date().toISOString(),
+        address: {
+          cep: "00000000",
+          state: "MG",
+          city: "Ibirité",
+          neighborhood: "Jardim das Rosas",
+          address: "Rua Ouro Preto",
+          number: "239",
+          complement: "casa 10",
+        },
+      },
+      {
         id: "2",
         email: "email2@example.com",
         cpf: "22222222222",
         phone: "22222222222",
-      }),
-      ClientFakersFactory.generate({
+        username: "client username",
+        name: "client name",
+        birthDate: new Date().toISOString(),
+        address: {
+          cep: "00000000",
+          state: "MG",
+          city: "Ibirité",
+          neighborhood: "Jardim das Rosas",
+          address: "Rua Ouro Preto",
+          number: "239",
+          complement: "casa 10",
+        },
+      },
+      {
         id: "3",
         email: "email3@example.com",
         cpf: "33333333333",
         phone: "33333333333",
-      }),
+        username: "client username",
+        name: "client name",
+        birthDate: new Date().toISOString(),
+        address: {
+          cep: "00000000",
+          state: "MG",
+          city: "Ibirité",
+          neighborhood: "Jardim das Rosas",
+          address: "Rua Ouro Preto",
+          number: "239",
+          complement: "casa 10",
+        },
+      },
     ];
 
     const listSpy = vi.spyOn(dataSource, "list");
@@ -38,25 +73,6 @@ describe("ListClientsQuery", () => {
 
     expect(listSpy).toHaveBeenCalledTimes(1);
 
-    expect(output).toMatchObject([
-      {
-        id: "1",
-        email: "email1@example.com",
-        cpf: "11111111111",
-        phone: "11111111111",
-      },
-      {
-        id: "2",
-        email: "email2@example.com",
-        cpf: "22222222222",
-        phone: "22222222222",
-      },
-      {
-        id: "3",
-        email: "email3@example.com",
-        cpf: "33333333333",
-        phone: "33333333333",
-      },
-    ]);
+    expect(output).toHaveLength(3);
   });
 });

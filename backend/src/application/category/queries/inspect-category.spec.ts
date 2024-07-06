@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from "vitest";
 import { InspectCategoryQuery } from "./inspect-category";
 import { CategoryNotFoundError } from "../errors/not-foud";
 
-import { Category } from "@/domain/entities/category";
 import { CategoryDataSoruceMemory } from "@/infra/db/memory/category-data-source";
 
 describe("InspectCategoryQuery", () => {
@@ -13,11 +12,11 @@ describe("InspectCategoryQuery", () => {
     const sut = new InspectCategoryQuery(dataSource);
 
     dataSource.storage = [
-      new Category({
+      {
         id: "1",
         name: "Categoria 1",
         description: "Descricao 1",
-      }),
+      },
     ];
 
     const inspectSpy = vi.spyOn(dataSource, "inspect");
@@ -40,11 +39,11 @@ describe("InspectCategoryQuery", () => {
     const sut = new InspectCategoryQuery(dataSource);
 
     dataSource.storage = [
-      new Category({
+      {
         id: "1",
         name: "Categoria 1",
         description: "Descricao 1",
-      }),
+      },
     ];
 
     const input = { id: "2" };

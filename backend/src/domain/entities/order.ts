@@ -8,10 +8,8 @@ export enum OrderEnum {
 interface OrderProps {
   id: string;
   code: string;
-  totalPrice: number;
   createdAt: Date;
   status: OrderEnum;
-  client: string;
   idClient: string;
   products: OrderProduct[];
 }

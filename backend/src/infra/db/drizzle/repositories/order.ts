@@ -37,8 +37,6 @@ export class OrderDrizzleRepository implements IOrderRepository {
       code: String(result.pedido.numero_pedido),
       status: result.pedido.status ? OrderEnum.finished : OrderEnum.pending,
       createdAt: new Date(result.pedido.data_pedido),
-      totalPrice: Number(result.pedido.valor_total_pedido ?? 0),
-      client: result.cliente.nome ?? "",
       idClient: String(result.cliente.cliente_id ?? ""),
       products: products.map(({ produto, produto_pedido }) => {
         return new OrderProduct({

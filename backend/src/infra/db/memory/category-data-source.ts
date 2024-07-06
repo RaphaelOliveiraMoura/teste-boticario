@@ -1,29 +1,19 @@
 import {
-  CategoryDto,
+  InspectCategoryDto,
+  ListCategoryDto,
   ICategoryDataSource,
 } from "@/domain/data-sources/category";
-import { Category } from "@/domain/entities/category";
 
 export class CategoryDataSoruceMemory implements ICategoryDataSource {
-  storage = [] as Category[];
+  storage = [] as InspectCategoryDto[];
 
-  async inspect(id: string): Promise<CategoryDto | null> {
-    const category = this.storage.find(({ props }) => props.id === id);
-
+  async inspect(id: string): Promise<InspectCategoryDto | null> {
+    const category = this.storage.find((category) => category.id === id);
     if (!category) return null;
-
-    return {
-      id: category.props.id,
-      name: category.props.name,
-      description: category.props.description,
-    };
+    return category;
   }
 
-  async list(): Promise<CategoryDto[]> {
-    return this.storage.map((category) => ({
-      id: category.props.id,
-      name: category.props.name,
-      description: category.props.description,
-    }));
+  async list(): Promise<ListCategoryDto[]> {
+    return this.storage;
   }
 }

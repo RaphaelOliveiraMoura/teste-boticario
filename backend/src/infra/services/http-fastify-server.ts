@@ -53,10 +53,10 @@ export class HttpFastifyServer implements IHttpServer {
           params: request.params as T["Body"],
         });
 
-        return reply.send(response.data).status(response.status);
+        return reply.status(response.status).send(response.data);
       } catch (error) {
         if (error instanceof HttpError) {
-          return reply.send({ message: error.message }).status(error.status);
+          return reply.status(error.status).send({ message: error.message });
         }
 
         throw error;

@@ -34,7 +34,7 @@ export class CategoryDrizzleRepository implements ICategoryRepository {
       .where(eq(schema.categoria.categoria_id, +id))
       .limit(1);
 
-    if (!result) null;
+    if (!result) return null;
 
     return new Category({
       id: String(result.categoria_id),

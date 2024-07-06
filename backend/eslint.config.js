@@ -1,11 +1,11 @@
 // @ts-check
 
-import eslint from "@eslint/js";
-import * as importPlugin from "eslint-plugin-import";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import tseslint from "typescript-eslint";
+const eslint = require("@eslint/js");
+const importPlugin = require("eslint-plugin-import");
+const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+const tseslint = require("typescript-eslint");
 
-export default tseslint.config(
+module.exports = tseslint.config(
   {
     plugins: {
       import: { rules: importPlugin.rules },

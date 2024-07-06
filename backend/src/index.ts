@@ -1,20 +1,7 @@
-import Fastify from "fastify";
+import { DbConnection, httpServer } from "./main/services";
 
-import { configService } from "./main/services/config";
+import "./routes";
 
-const fastify = Fastify({
-  logger: true,
-});
-
-fastify.get("/", function (request, reply) {
-  reply.send({ hello: "world" });
-});
-
-fastify.listen({ port: +configService.get("PORT") }, function (err, address) {
-  if (err) {
-    console.error(err);
-    return process.exit(1);
-  }
-
-  console.info(`Server is now listening on ${address}`);
-});
+DbConnection.getInstance()
+  .initialize()
+  .then(() => httpServer.listen());

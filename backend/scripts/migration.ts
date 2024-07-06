@@ -1,5 +1,5 @@
-import { DbConnection } from "@/main/services/db-connection";
-import { fileSystem } from "@/main/services/file-system";
+import { DbConnection } from "@/main/services";
+import { fileSystem } from "@/main/services";
 
 fileSystem
   .readFile(fileSystem.resolvePath("ddl.sql", import.meta))

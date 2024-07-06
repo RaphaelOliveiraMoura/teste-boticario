@@ -2,8 +2,8 @@ import "dotenv/config";
 
 import { defineConfig } from "drizzle-kit";
 
-import { configService } from "@/main/services/config";
-import { fileSystem } from "@/main/services/file-system";
+import { configService } from "@/main/services";
+import { fileSystem } from "@/main/services";
 
 export default defineConfig({
   schema: fileSystem.resolvePath("./schema.ts", __dirname),

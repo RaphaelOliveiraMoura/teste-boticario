@@ -9,7 +9,7 @@ import {
   boolean,
 } from "drizzle-orm/pg-core";
 
-export const endereco = pgTable("endereco", {
+const endereco = pgTable("endereco", {
   endereco_id: serial("endereco_id").primaryKey().notNull(),
   cep: varchar("cep", { length: 9 }),
   rua: varchar("rua", { length: 100 }),
@@ -20,7 +20,7 @@ export const endereco = pgTable("endereco", {
   uf: varchar("uf", { length: 2 }),
 });
 
-export const cliente = pgTable(
+const cliente = pgTable(
   "cliente",
   {
     cliente_id: serial("cliente_id").primaryKey().notNull(),
@@ -40,7 +40,7 @@ export const cliente = pgTable(
   },
 );
 
-export const pedido = pgTable("pedido", {
+const pedido = pgTable("pedido", {
   pedido_id: serial("pedido_id").primaryKey().notNull(),
   numero_pedido: integer("numero_pedido"),
   valor_total_pedido: numeric("valor_total_pedido"),
@@ -51,13 +51,13 @@ export const pedido = pgTable("pedido", {
     .references(() => cliente.cliente_id),
 });
 
-export const categoria = pgTable("categoria", {
+const categoria = pgTable("categoria", {
   categoria_id: serial("categoria_id").primaryKey().notNull(),
   nome_categoria: varchar("nome_categoria", { length: 20 }),
   descricao_categoria: varchar("descricao_categoria", { length: 200 }),
 });
 
-export const produto = pgTable("produto", {
+const produto = pgTable("produto", {
   produto_id: serial("produto_id").primaryKey().notNull(),
   nome_produto: varchar("nome_produto", { length: 50 }),
   descricao_produto: varchar("descricao_produto", { length: 200 }),
@@ -70,10 +70,19 @@ export const produto = pgTable("produto", {
   imagem: varchar("imagem"),
 });
 
-export const produto_pedido = pgTable("produto_pedido", {
+const produto_pedido = pgTable("produto_pedido", {
   produto_pedido_id: serial("produto_pedido_id").primaryKey().notNull(),
   qtd_produto_pedido: integer("qtd_produto_pedido"),
   preco_produto_pedido: numeric("preco_produto_pedido"),
   produto_id: integer("produto_id").references(() => produto.produto_id),
   pedido_id: integer("pedido_id").references(() => pedido.pedido_id),
 });
+
+export const schema = {
+  endereco,
+  cliente,
+  pedido,
+  categoria,
+  produto,
+  produto_pedido,
+};

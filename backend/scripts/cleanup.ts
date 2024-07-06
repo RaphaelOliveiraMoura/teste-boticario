@@ -1,4 +1,4 @@
-import { DbConnection } from "@/main/services/db-connection";
+import { DbConnection } from "@/main/services";
 
 DbConnection.getInstance()
   .rawQuery(

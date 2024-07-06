@@ -1,5 +1,5 @@
 import { Controller } from ".";
-import { signInUseCase } from "../application";
+import { auth } from "../application";
 
 import { IHttpServer } from "@/domain/services/http-server";
 
@@ -9,7 +9,7 @@ export class AuthController implements Controller {
       "POST",
       "/sign-in",
       async ({ body }) => {
-        const data = await signInUseCase.execute(body);
+        const data = await auth.signIn.execute(body);
         return { data, status: 200 };
       },
     );

@@ -32,7 +32,7 @@ export class ProductDrizzleRepository implements IProductRepository {
       .select()
       .from(schema.produto)
       .where(eq(schema.produto.produto_id, +id))
-      .leftJoin(
+      .innerJoin(
         schema.categoria,
         eq(schema.categoria.categoria_id, schema.produto.categoria_id),
       )
@@ -49,9 +49,9 @@ export class ProductDrizzleRepository implements IProductRepository {
       price: result.produto.preco_produto ? +result.produto.preco_produto : 0,
       stock: result.produto.qtd_estoque ?? 0,
       category: new Category({
-        id: String(result.categoria?.categoria_id),
-        name: result.categoria?.nome_categoria ?? "",
-        description: result.categoria?.descricao_categoria ?? "",
+        id: String(result.categoria.categoria_id),
+        name: result.categoria.nome_categoria ?? "",
+        description: result.categoria.descricao_categoria ?? "",
       }),
     });
   }

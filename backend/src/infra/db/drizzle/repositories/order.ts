@@ -15,7 +15,7 @@ export class OrderDrizzleRepository implements IOrderRepository {
       .select()
       .from(schema.pedido)
       .where(eq(schema.pedido.pedido_id, +id))
-      .leftJoin(
+      .innerJoin(
         schema.cliente,
         eq(schema.cliente.cliente_id, schema.pedido.cliente_id),
       )
@@ -38,8 +38,8 @@ export class OrderDrizzleRepository implements IOrderRepository {
       status: result.pedido.status ? OrderEnum.finished : OrderEnum.pending,
       createdAt: new Date(result.pedido.data_pedido),
       totalPrice: Number(result.pedido.valor_total_pedido ?? 0),
-      client: result.cliente?.nome ?? "",
-      idClient: String(result.cliente?.cliente_id ?? ""),
+      client: result.cliente.nome ?? "",
+      idClient: String(result.cliente.cliente_id ?? ""),
       products: products.map(({ produto, produto_pedido }) => {
         return new OrderProduct({
           idProduct: String(produto.produto_id),

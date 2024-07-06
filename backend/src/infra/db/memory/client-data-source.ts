@@ -2,16 +2,14 @@ import {
   InspectClientDto,
   ListClientDto,
   IClientDataSource,
-} from "@/application/client/queries/data-source";
+} from "@/domain/data-sources/client";
 import { Client } from "@/domain/entities/client";
 
 export class ClientDataSoruceMemory implements IClientDataSource {
-  storage = {
-    clients: [] as Client[],
-  };
+  storage = [] as Client[];
 
   async inspect(id: string): Promise<InspectClientDto | null> {
-    const client = this.storage.clients.find(({ props }) => props.id === id);
+    const client = this.storage.find(({ props }) => props.id === id);
 
     if (!client) return null;
 
@@ -36,7 +34,7 @@ export class ClientDataSoruceMemory implements IClientDataSource {
   }
 
   async list(): Promise<ListClientDto[]> {
-    return this.storage.clients.map((client) => ({
+    return this.storage.map((client) => ({
       id: client.props.id,
       email: client.props.email.value,
       username: client.props.username,

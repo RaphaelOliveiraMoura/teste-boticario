@@ -4,12 +4,10 @@ import { Client } from "@/domain/entities/client";
 import { IClientRepository } from "@/domain/repositories/client-repository";
 
 export class ClientRepositoryMemory implements IClientRepository {
-  storage = {
-    clients: [] as Client[],
-  };
+  storage = [] as Client[];
 
   async alreadyInUse(client: Client): Promise<boolean> {
-    return this.storage.clients.some(
+    return this.storage.some(
       ({ props }) =>
         (props.email.value === client.props.email.value ||
           props.cpf.value === client.props.cpf.value ||
@@ -19,7 +17,7 @@ export class ClientRepositoryMemory implements IClientRepository {
   }
 
   async findByUsername(username: string): Promise<Client | null> {
-    const client = this.storage.clients.find(
+    const client = this.storage.find(
       (client) => client.props.username === username,
     );
 
@@ -29,9 +27,7 @@ export class ClientRepositoryMemory implements IClientRepository {
   }
 
   async findById(id: string): Promise<Client | null> {
-    const client = this.storage.clients.find(
-      (client) => client.props.id === id,
-    );
+    const client = this.storage.find((client) => client.props.id === id);
 
     if (!client) return null;
 
@@ -44,26 +40,24 @@ export class ClientRepositoryMemory implements IClientRepository {
       id: randomUUID(),
     });
 
-    this.storage.clients.push(cloneClient);
+    this.storage.push(cloneClient);
   }
 
   async update(client: Client): Promise<void> {
-    const idx = this.storage.clients.findIndex(
+    const idx = this.storage.findIndex(
       ({ props }) => props.id === client.props.id,
     );
 
     if (idx < 0) return;
 
-    this.storage.clients[idx] = new Client({ ...client.props });
+    this.storage[idx] = new Client({ ...client.props });
   }
 
   async remove(id: string): Promise<void> {
-    const idx = this.storage.clients.findIndex(
-      (client) => client.props.id === id,
-    );
+    const idx = this.storage.findIndex((client) => client.props.id === id);
 
     if (idx < 0) return;
 
-    this.storage.clients.splice(idx, 1);
+    this.storage.splice(idx, 1);
   }
 }

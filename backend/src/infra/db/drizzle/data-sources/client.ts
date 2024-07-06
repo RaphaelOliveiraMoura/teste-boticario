@@ -7,7 +7,7 @@ import {
   ListClientDto,
   InspectClientDto,
   IClientDataSource,
-} from "@/application/client/queries/data-source";
+} from "@/domain/data-sources/client";
 
 export class ClientDrizzleDataSource implements IClientDataSource {
   private drizzle = DbConnectionDrizzleService.getInstance().drizzle();

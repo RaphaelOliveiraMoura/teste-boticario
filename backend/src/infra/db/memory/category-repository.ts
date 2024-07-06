@@ -4,21 +4,17 @@ import { Category } from "@/domain/entities/category";
 import { ICategoryRepository } from "@/domain/repositories/category-repository";
 
 export class CategoryRepositoryMemory implements ICategoryRepository {
-  storage = {
-    categories: [] as Category[],
-  };
+  storage = [] as Category[];
 
   async alreadyInUse(category: Category): Promise<boolean> {
-    return this.storage.categories.some(
+    return this.storage.some(
       ({ props }) =>
         props.name === category.props.name && props.id !== category.props.id,
     );
   }
 
   async findById(id: string): Promise<Category | null> {
-    const category = this.storage.categories.find(
-      (category) => category.props.id === id,
-    );
+    const category = this.storage.find((category) => category.props.id === id);
 
     if (!category) return null;
 
@@ -31,26 +27,24 @@ export class CategoryRepositoryMemory implements ICategoryRepository {
       id: randomUUID(),
     });
 
-    this.storage.categories.push(cloneCategory);
+    this.storage.push(cloneCategory);
   }
 
   async update(category: Category): Promise<void> {
-    const idx = this.storage.categories.findIndex(
+    const idx = this.storage.findIndex(
       ({ props }) => props.id === category.props.id,
     );
 
     if (idx < 0) return;
 
-    this.storage.categories[idx] = new Category({ ...category.props });
+    this.storage[idx] = new Category({ ...category.props });
   }
 
   async remove(id: string): Promise<void> {
-    const idx = this.storage.categories.findIndex(
-      (category) => category.props.id === id,
-    );
+    const idx = this.storage.findIndex((category) => category.props.id === id);
 
     if (idx < 0) return;
 
-    this.storage.categories.splice(idx, 1);
+    this.storage.splice(idx, 1);
   }
 }

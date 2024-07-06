@@ -6,7 +6,7 @@ import { schema } from "../schema";
 import {
   CategoryDto,
   ICategoryDataSource,
-} from "@/application/category/queries/data-source";
+} from "@/domain/data-sources/category";
 
 export class CategoryDrizzleDataSource implements ICategoryDataSource {
   private drizzle = DbConnectionDrizzleService.getInstance().drizzle();

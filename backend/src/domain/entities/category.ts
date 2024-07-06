@@ -5,9 +5,5 @@ interface CategoryProps {
 }
 
 export class Category {
-  props!: CategoryProps;
-
-  constructor(props: CategoryProps) {
-    this.props = props;
-  }
+  constructor(public props: CategoryProps) {}
 }

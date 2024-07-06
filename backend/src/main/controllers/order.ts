@@ -1,4 +1,5 @@
 import { Controller } from ".";
+import { OrderBody, validateBody } from "./order.validation";
 import { order } from "../application";
 
 import { IHttpServer } from "@/domain/services/http-server";
@@ -28,10 +29,14 @@ export class OrderController implements Controller {
     httpServer.bind<{ Body: OrderBody }>({
       method: "POST",
       path: "/orders",
-      handleWithAuth: async ({ body }) => {
-        const data = await order.create.execute({ ...body });
+      handleWithAuth: async ({ body, client }) => {
+        const data = await order.create.execute({
+          ...body,
+          idClient: client.props.id,
+        });
         return { data, status: 201 };
       },
+      validate: async ({ body }) => validateBody(body),
     });
 
     httpServer.bind<{ Params: { id: string } }>({
@@ -54,14 +59,4 @@ export class OrderController implements Controller {
       },
     });
   }
-}
-
-interface OrderBody {
-  idClient: string;
-  products: {
-    idProduct: string;
-    name: string;
-    price: number;
-    quantity: number;
-  }[];
 }

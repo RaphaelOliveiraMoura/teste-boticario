@@ -1,4 +1,5 @@
 import { Controller } from ".";
+import { ClientBody, validateBody } from "./client.validation";
 import { client } from "../application";
 
 import { IHttpServer } from "@/domain/services/http-server";
@@ -35,6 +36,7 @@ export class ClientController implements Controller {
         });
         return { data, status: 201 };
       },
+      validate: async ({ body }) => validateBody(body),
     });
 
     httpServer.bind<{ Body: ClientBody; Params: { id: string } }>({
@@ -48,6 +50,7 @@ export class ClientController implements Controller {
         });
         return { data, status: 200 };
       },
+      validate: async ({ body }) => validateBody(body),
     });
 
     httpServer.bind<{ Params: { id: string } }>({
@@ -61,23 +64,4 @@ export class ClientController implements Controller {
       },
     });
   }
-}
-
-interface ClientBody {
-  email: string;
-  username: string;
-  name: string;
-  password: string;
-  cpf: string;
-  phone: string;
-  birthDate: string;
-  address: {
-    cep: string;
-    state: string;
-    city: string;
-    neighborhood: string;
-    address: string;
-    number: string;
-    complement: string;
-  };
 }

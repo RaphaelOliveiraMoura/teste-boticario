@@ -6,6 +6,7 @@ import { Client } from "@/domain/entities/client";
 import { IConfigService } from "@/domain/services/config";
 import {
   CallbackFunction,
+  CallbackValidateFunction,
   HttpCallbackParamsTypes,
   IHttpServer,
 } from "@/domain/services/http-server";
@@ -36,12 +37,13 @@ export class HttpFastifyServer implements IHttpServer {
     params: {
       method: "POST" | "GET" | "PUT" | "DELETE";
       path: string;
+      validate?: CallbackValidateFunction<T>;
     } & (
       | { handleWithAuth: CallbackFunction<T, true> }
       | { handle: CallbackFunction<T, false> }
     ),
   ): void {
-    const { method, path } = params;
+    const { method, path, validate } = params;
 
     const fastifyMethodMap = {
       POST: "post",
@@ -58,6 +60,20 @@ export class HttpFastifyServer implements IHttpServer {
 
     this.fastify[fastifyMethod](path, async (request, reply) => {
       try {
+        if (validate) {
+          const { valid, errors } = await validate({
+            body: request.body as T["Body"],
+            headers: request.headers as T["Headers"],
+            params: request.params as T["Params"],
+          });
+
+          if (!valid) {
+            return reply
+              .status(400)
+              .send({ message: "ValidationError", errors });
+          }
+        }
+
         const requiresAuth = "handleWithAuth" in params;
 
         const handleMethod = requiresAuth

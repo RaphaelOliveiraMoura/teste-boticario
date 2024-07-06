@@ -21,7 +21,7 @@ export type CallbackFunction<
 
 export type CallbackValidateFunction<T extends HttpCallbackParamsTypes> = (
   props: Props<T>,
-) => Promise<{ data: unknown; status: number }>;
+) => Promise<{ valid: boolean; errors: string[] }>;
 
 export interface IHttpServer {
   listen(port: number): void;

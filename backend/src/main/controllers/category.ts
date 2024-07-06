@@ -32,6 +32,7 @@ export class CategoryController implements Controller {
         const data = await category.create.execute(body);
         return { data, status: 201 };
       },
+      validate: async ({ body }) => this.validateBody(body),
     });
 
     httpServer.bind<{ Body: CategoryBody; Params: { id: string } }>({
@@ -44,6 +45,7 @@ export class CategoryController implements Controller {
         });
         return { data, status: 200 };
       },
+      validate: async ({ body }) => this.validateBody(body),
     });
 
     httpServer.bind<{ Params: { id: string } }>({
@@ -56,6 +58,17 @@ export class CategoryController implements Controller {
         return { data, status: 204 };
       },
     });
+  }
+
+  private validateBody(body: CategoryBody) {
+    const errors = [];
+    if (!body.name) errors.push("name is required");
+    if (body.name.length > 20)
+      errors.push("name must be lower then 20 characters");
+    if (!body.description) errors.push("description is required");
+    if (body.name.length > 200)
+      errors.push("name must be lower then 200 characters");
+    return { valid: errors.length === 0, errors };
   }
 }
 

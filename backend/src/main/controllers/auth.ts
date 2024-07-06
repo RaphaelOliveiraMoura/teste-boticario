@@ -12,6 +12,12 @@ export class AuthController implements Controller {
         const data = await auth.signIn.execute(body);
         return { data, status: 200 };
       },
+      validate: async ({ body }) => {
+        const errors = [];
+        if (!body.username) errors.push("username is required");
+        if (!body.password) errors.push("password is required");
+        return { valid: errors.length === 0, errors };
+      },
     });
   }
 }

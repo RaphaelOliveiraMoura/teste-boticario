@@ -1,4 +1,5 @@
 import { Controller } from ".";
+import { ProductBody, validateBody } from "./product.validation";
 import { product } from "../application";
 
 import { IHttpServer } from "@/domain/services/http-server";
@@ -35,6 +36,7 @@ export class ProductController implements Controller {
         });
         return { data, status: 201 };
       },
+      validate: ({ body }) => validateBody(body),
     });
 
     httpServer.bind<{ Body: ProductBody; Params: { id: string } }>({
@@ -47,6 +49,7 @@ export class ProductController implements Controller {
         });
         return { data, status: 200 };
       },
+      validate: ({ body }) => validateBody(body),
     });
 
     httpServer.bind<{ Params: { id: string } }>({
@@ -60,13 +63,4 @@ export class ProductController implements Controller {
       },
     });
   }
-}
-
-interface ProductBody {
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  idCategory: string;
-  image: string;
 }

@@ -21,7 +21,7 @@ CREATE TABLE public.cliente (
 	cliente_id serial NOT NULL,
 	email varchar(50) NULL,
 	username varchar(15) NULL,
-	senha varchar(20) NULL,
+	senha varchar(100) NULL,
 	nome varchar(200) NULL,
 	cpf varchar(11) NOT NULL,
 	telefone varchar(11) NULL,

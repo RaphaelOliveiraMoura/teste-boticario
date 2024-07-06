@@ -5,14 +5,16 @@ import { IHttpServer } from "@/domain/services/http-server";
 
 export class ProductController implements Controller {
   route(httpServer: IHttpServer): void {
-    httpServer.bind("GET", "/categories", async () => {
-      const data = await product.list.execute();
-      return { data, status: 200 };
-    });
+    httpServer.bind(
+      { method: "GET", path: "/products", requireAuth: true },
+      async () => {
+        const data = await product.list.execute();
+        return { data, status: 200 };
+      },
+    );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "GET",
-      "/categories/:id",
+      { method: "GET", path: "/products/:id", requireAuth: true },
       async ({ params }) => {
         const data = await product.inspect.execute({
           id: params.id,
@@ -22,8 +24,7 @@ export class ProductController implements Controller {
     );
 
     httpServer.bind<{ Body: ProductBody }>(
-      "POST",
-      "/categories",
+      { method: "POST", path: "/products", requireAuth: true },
       async ({ body }) => {
         const data = await product.create.execute({
           ...body,
@@ -34,8 +35,7 @@ export class ProductController implements Controller {
     );
 
     httpServer.bind<{ Body: ProductBody; Params: { id: string } }>(
-      "PUT",
-      "/categories/:id",
+      { method: "PUT", path: "/products/:id", requireAuth: true },
       async ({ body, params }) => {
         const data = await product.update.execute({
           id: params.id,
@@ -46,8 +46,7 @@ export class ProductController implements Controller {
     );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "DELETE",
-      "/categories/:id",
+      { method: "DELETE", path: "/products/:id", requireAuth: true },
       async ({ params }) => {
         const data = await product.delete.execute({
           id: params.id,

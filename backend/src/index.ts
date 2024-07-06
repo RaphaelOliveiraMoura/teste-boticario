@@ -1,4 +1,5 @@
-import { DbConnection, httpServer } from "./main/services";
+import { httpServer } from "./main/server";
+import { DbConnection } from "./main/services";
 
 import "./main/routes";
 

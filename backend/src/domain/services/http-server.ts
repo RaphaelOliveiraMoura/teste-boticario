@@ -14,8 +14,11 @@ export interface IHttpServer {
   listen(port: number): void;
 
   bind<T extends HttpCallbackParamsTypes>(
-    method: "POST" | "GET" | "PUT" | "DELETE",
-    path: string,
+    params: {
+      method: "POST" | "GET" | "PUT" | "DELETE";
+      path: string;
+      requireAuth?: boolean;
+    },
     callback: CallbackFunction<T>,
   ): void;
 }

@@ -12,6 +12,10 @@ export class VerifyAuthUseCase implements UseCase<Input, Output> {
   ) {}
 
   async execute(input: Input): Promise<Output> {
+    if (!input.token) {
+      throw new InvalidAuthenticationError();
+    }
+
     const token = await this.hashService.decode<{ id: string }>(input.token);
 
     const client = await this.clientRepository.findById(token.id);
@@ -25,7 +29,7 @@ export class VerifyAuthUseCase implements UseCase<Input, Output> {
 }
 
 interface Input {
-  token: string;
+  token?: string;
 }
 
 type Output = Client;

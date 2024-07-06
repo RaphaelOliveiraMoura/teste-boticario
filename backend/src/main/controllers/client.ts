@@ -5,14 +5,16 @@ import { IHttpServer } from "@/domain/services/http-server";
 
 export class ClientController implements Controller {
   route(httpServer: IHttpServer): void {
-    httpServer.bind("GET", "/clients", async () => {
-      const data = await client.list.execute();
-      return { data, status: 200 };
-    });
+    httpServer.bind(
+      { method: "GET", path: "/clients", requireAuth: true },
+      async () => {
+        const data = await client.list.execute();
+        return { data, status: 200 };
+      },
+    );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "GET",
-      "/clients/:id",
+      { method: "GET", path: "/clients/:id", requireAuth: true },
       async ({ params }) => {
         const data = await client.inspect.execute({
           id: params.id,
@@ -22,8 +24,7 @@ export class ClientController implements Controller {
     );
 
     httpServer.bind<{ Body: ClientBody }>(
-      "POST",
-      "/clients",
+      { method: "POST", path: "/clients", requireAuth: true },
       async ({ body }) => {
         const data = await client.create.execute({
           ...body,
@@ -34,8 +35,7 @@ export class ClientController implements Controller {
     );
 
     httpServer.bind<{ Body: ClientBody; Params: { id: string } }>(
-      "PUT",
-      "/clients/:id",
+      { method: "PUT", path: "/clients/:id", requireAuth: true },
       async ({ body, params }) => {
         const data = await client.update.execute({
           id: params.id,
@@ -47,8 +47,7 @@ export class ClientController implements Controller {
     );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "DELETE",
-      "/clients/:id",
+      { method: "DELETE", path: "/clients/:id", requireAuth: true },
       async ({ params }) => {
         const data = await client.delete.execute({
           id: params.id,

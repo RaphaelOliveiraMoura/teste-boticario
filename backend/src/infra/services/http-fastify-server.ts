@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 
 import { HttpError } from "@/application";
+import { VerifyAuthUseCase } from "@/application/auth/use-case/verify-auth";
 import { IConfigService } from "@/domain/services/config";
 import {
   CallbackFunction,
@@ -11,7 +12,10 @@ import {
 export class HttpFastifyServer implements IHttpServer {
   private fastify = Fastify({ logger: true });
 
-  constructor(private readonly configService: IConfigService) {}
+  constructor(
+    private readonly configService: IConfigService,
+    private readonly verifyAuthUseCase: VerifyAuthUseCase,
+  ) {}
 
   listen(): void {
     this.fastify.listen(
@@ -28,10 +32,15 @@ export class HttpFastifyServer implements IHttpServer {
   }
 
   bind<T extends HttpCallbackParamsTypes>(
-    method: "POST" | "GET" | "PUT" | "DELETE",
-    path: string,
+    params: {
+      method: "POST" | "GET" | "PUT" | "DELETE";
+      path: string;
+      requireAuth?: boolean;
+    },
     callback: CallbackFunction<T>,
   ): void {
+    const { method, path, requireAuth = false } = params;
+
     const fastifyMethodMap = {
       POST: "post",
       GET: "get",
@@ -45,8 +54,13 @@ export class HttpFastifyServer implements IHttpServer {
       throw new Error(`Fastify method invalid [${fastifyMethod}]`);
     }
 
-    this.fastify[fastifyMethod](path, async function (request, reply) {
+    this.fastify[fastifyMethod](path, async (request, reply) => {
       try {
+        if (requireAuth) {
+          const token = request.headers.authorization;
+          await this.verifyAuthUseCase.execute({ token });
+        }
+
         const response = await callback({
           body: request.body as T["Body"],
           headers: request.headers as T["Headers"],

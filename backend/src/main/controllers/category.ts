@@ -5,14 +5,16 @@ import { IHttpServer } from "@/domain/services/http-server";
 
 export class CategoryController implements Controller {
   route(httpServer: IHttpServer): void {
-    httpServer.bind("GET", "/categories", async () => {
-      const data = await category.list.execute();
-      return { data, status: 200 };
-    });
+    httpServer.bind(
+      { method: "GET", path: "/categories", requireAuth: true },
+      async () => {
+        const data = await category.list.execute();
+        return { data, status: 200 };
+      },
+    );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "GET",
-      "/categories/:id",
+      { method: "GET", path: "/categories/:id", requireAuth: true },
       async ({ params }) => {
         const data = await category.inspect.execute({
           id: params.id,
@@ -22,8 +24,7 @@ export class CategoryController implements Controller {
     );
 
     httpServer.bind<{ Body: CategoryBody }>(
-      "POST",
-      "/categories",
+      { method: "POST", path: "/categories", requireAuth: true },
       async ({ body }) => {
         const data = await category.create.execute(body);
         return { data, status: 201 };
@@ -31,8 +32,7 @@ export class CategoryController implements Controller {
     );
 
     httpServer.bind<{ Body: CategoryBody; Params: { id: string } }>(
-      "PUT",
-      "/categories/:id",
+      { method: "PUT", path: "/categories/:id", requireAuth: true },
       async ({ body, params }) => {
         const data = await category.update.execute({
           id: params.id,
@@ -43,8 +43,7 @@ export class CategoryController implements Controller {
     );
 
     httpServer.bind<{ Params: { id: string } }>(
-      "DELETE",
-      "/categories/:id",
+      { method: "DELETE", path: "/categories/:id", requireAuth: true },
       async ({ params }) => {
         const data = await category.delete.execute({
           id: params.id,

@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 
+import { HttpError } from "@/application";
 import { IConfigService } from "@/domain/services/config";
 import {
   CallbackFunction,
@@ -45,13 +46,21 @@ export class HttpFastifyServer implements IHttpServer {
     }
 
     this.fastify[fastifyMethod](path, async function (request, reply) {
-      const response = await callback({
-        body: request.body as T["Body"],
-        headers: request.headers as T["Headers"],
-        params: request.params as T["Body"],
-      });
+      try {
+        const response = await callback({
+          body: request.body as T["Body"],
+          headers: request.headers as T["Headers"],
+          params: request.params as T["Body"],
+        });
 
-      reply.send(response.data).status(response.status);
+        return reply.send(response.data).status(response.status);
+      } catch (error) {
+        if (error instanceof HttpError) {
+          return reply.send({ message: error.message }).status(error.status);
+        }
+
+        throw error;
+      }
     });
   }
 }

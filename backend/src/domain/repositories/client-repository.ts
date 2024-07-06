@@ -1,7 +1,7 @@
 import { Client } from "../entities/client";
 
 export interface IClientRepository {
-  violateConstraint(client: Client, id?: string): Promise<boolean>;
+  alreadyInUse(client: Client): Promise<boolean>;
 
   findByUsername(username: string): Promise<Client | null>;
   findById(id: string): Promise<Client | null>;

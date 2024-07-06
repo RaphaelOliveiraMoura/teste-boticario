@@ -8,31 +8,34 @@ export class ClientRepositoryMemory implements IClientRepository {
     clients: [] as Client[],
   };
 
-  async violateConstraint(
-    client: Client,
-    id?: string | undefined,
-  ): Promise<boolean> {
+  async alreadyInUse(client: Client): Promise<boolean> {
     return this.storage.clients.some(
       ({ props }) =>
         (props.email.value === client.props.email.value ||
           props.cpf.value === client.props.cpf.value ||
           props.phone.value === client.props.phone.value) &&
-        props.id !== id,
+        props.id !== client.props.id,
     );
   }
 
   async findByUsername(username: string): Promise<Client | null> {
-    return (
-      this.storage.clients.find(
-        (client) => client.props.username === username,
-      ) ?? null
+    const client = this.storage.clients.find(
+      (client) => client.props.username === username,
     );
+
+    if (!client) return null;
+
+    return new Client({ ...client.props });
   }
 
   async findById(id: string): Promise<Client | null> {
-    return (
-      this.storage.clients.find((client) => client.props.id === id) ?? null
+    const client = this.storage.clients.find(
+      (client) => client.props.id === id,
     );
+
+    if (!client) return null;
+
+    return new Client({ ...client.props });
   }
 
   async create(client: Client): Promise<void> {
@@ -45,9 +48,13 @@ export class ClientRepositoryMemory implements IClientRepository {
   }
 
   async update(client: Client): Promise<void> {
-    const dbClient = await this.findById(client.props.id);
-    if (!dbClient) throw new Error("ClientNotFound");
-    dbClient.props = client.props;
+    const idx = this.storage.clients.findIndex(
+      ({ props }) => props.id === client.props.id,
+    );
+
+    if (idx < 0) return;
+
+    this.storage.clients[idx] = new Client({ ...client.props });
   }
 
   async remove(id: string): Promise<void> {

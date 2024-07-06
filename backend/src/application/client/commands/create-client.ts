@@ -28,8 +28,7 @@ export class CreateClientCommand implements UseCase<Input, void> {
       address: new Address(input.address),
     });
 
-    const alreadyCreated =
-      await this.clientRepository.violateConstraint(client);
+    const alreadyCreated = await this.clientRepository.alreadyInUse(client);
 
     if (alreadyCreated) {
       throw new ClientAlreadyCreatedError(input.name);

@@ -8,18 +8,17 @@ export class CreateCategoryCommand implements UseCase<Input, void> {
   constructor(private readonly categoryRepository: ICategoryRepository) {}
 
   async execute(input: Input): Promise<void> {
-    const alreadyCreated =
-      await this.categoryRepository.violateNameUniqueConstraint(input.name);
-
-    if (alreadyCreated) {
-      throw new CategoryAlreadyCreatedError(input.name);
-    }
-
     const category = new Category({
       id: "",
       name: input.name,
       description: input.description,
     });
+
+    const alreadyCreated = await this.categoryRepository.alreadyInUse(category);
+
+    if (alreadyCreated) {
+      throw new CategoryAlreadyCreatedError(input.name);
+    }
 
     await this.categoryRepository.create(category);
   }

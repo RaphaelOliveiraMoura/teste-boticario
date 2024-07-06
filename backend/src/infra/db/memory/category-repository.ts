@@ -8,20 +8,21 @@ export class CategoryRepositoryMemory implements ICategoryRepository {
     categories: [] as Category[],
   };
 
-  async violateNameUniqueConstraint(
-    name: string,
-    id?: string | undefined,
-  ): Promise<boolean> {
+  async alreadyInUse(category: Category): Promise<boolean> {
     return this.storage.categories.some(
-      (category) => category.props.name === name && category.props.id !== id,
+      ({ props }) =>
+        props.name === category.props.name && props.id !== category.props.id,
     );
   }
 
   async findById(id: string): Promise<Category | null> {
-    return (
-      this.storage.categories.find((category) => category.props.id === id) ??
-      null
+    const category = this.storage.categories.find(
+      (category) => category.props.id === id,
     );
+
+    if (!category) return null;
+
+    return new Category({ ...category.props });
   }
 
   async create(category: Category): Promise<void> {
@@ -34,9 +35,13 @@ export class CategoryRepositoryMemory implements ICategoryRepository {
   }
 
   async update(category: Category): Promise<void> {
-    const dbCategory = await this.findById(category.props.id);
-    if (!dbCategory) throw new Error("CategoryNotFound");
-    dbCategory.props = category.props;
+    const idx = this.storage.categories.findIndex(
+      ({ props }) => props.id === category.props.id,
+    );
+
+    if (idx < 0) return;
+
+    this.storage.categories[idx] = new Category({ ...category.props });
   }
 
   async remove(id: string): Promise<void> {

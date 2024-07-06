@@ -30,7 +30,7 @@ describe("UpdateClientCommand", () => {
 
     const updateSpy = vi.spyOn(repository, "update");
     const findByIdSpy = vi.spyOn(repository, "findById");
-    const violateConstraintSpy = vi.spyOn(repository, "violateConstraint");
+    const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
     expect(repository.storage.clients).toHaveLength(1);
 
@@ -70,7 +70,7 @@ describe("UpdateClientCommand", () => {
       }),
     );
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
-    expect(violateConstraintSpy).toHaveBeenCalledTimes(1);
+    expect(alreadyInUseSpy).toHaveBeenCalledTimes(1);
 
     expect(repository.storage.clients).toHaveLength(1);
     expect(repository.storage.clients[0].props.email.value).toMatchObject(

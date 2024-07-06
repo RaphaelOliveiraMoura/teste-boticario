@@ -14,18 +14,15 @@ export class UpdateCategoryCommand implements UseCase<Input, void> {
       throw new CategoryNotFoundError(input.id);
     }
 
+    category.props.name = input.name;
+    category.props.description = input.description;
+
     const duplicatedCategory =
-      await this.categoryRepository.violateNameUniqueConstraint(
-        input.name,
-        category.props.id,
-      );
+      await this.categoryRepository.alreadyInUse(category);
 
     if (duplicatedCategory) {
       throw new CategoryAlreadyCreatedError(input.name);
     }
-
-    category.props.name = input.name;
-    category.props.description = input.description;
 
     await this.categoryRepository.update(category);
   }

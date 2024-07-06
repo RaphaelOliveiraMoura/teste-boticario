@@ -9,22 +9,21 @@ import { ICategoryRepository } from "@/domain/repositories/category-repository";
 export class CategoryDrizzleRepository implements ICategoryRepository {
   private drizzle = DbConnectionDrizzleService.getInstance().drizzle();
 
-  async violateNameUniqueConstraint(
-    name: string,
-    id?: string | undefined,
-  ): Promise<boolean> {
-    const [violates] = await this.drizzle
+  async alreadyInUse(category: Category): Promise<boolean> {
+    const [inUse] = await this.drizzle
       .select()
       .from(schema.categoria)
       .where(
         and(
-          eq(schema.categoria.nome_categoria, name),
-          ne(schema.categoria.categoria_id, Number(id)).if(id !== undefined),
+          eq(schema.categoria.nome_categoria, category.props.name),
+          ne(schema.categoria.categoria_id, Number(category.props.id)).if(
+            category.props.id !== undefined && category.props.id !== "",
+          ),
         ),
       )
       .limit(1);
 
-    return !!violates;
+    return !!inUse;
   }
 
   async findById(id: string): Promise<Category | null> {

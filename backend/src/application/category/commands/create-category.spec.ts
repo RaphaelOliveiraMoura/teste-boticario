@@ -13,10 +13,7 @@ describe("CreateCategoryCommand", () => {
     const sut = new CreateCategoryCommand(repository);
 
     const createSpy = vi.spyOn(repository, "create");
-    const violateNameUniqueConstraintSpy = vi.spyOn(
-      repository,
-      "violateNameUniqueConstraint",
-    );
+    const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
     expect(repository.storage.categories).toHaveLength(0);
 
@@ -28,7 +25,9 @@ describe("CreateCategoryCommand", () => {
     await sut.execute(input);
 
     expect(createSpy).toHaveBeenCalledWith(new Category({ id: "", ...input }));
-    expect(violateNameUniqueConstraintSpy).toHaveBeenCalledWith(input.name);
+    expect(alreadyInUseSpy).toHaveBeenCalledWith(
+      new Category({ id: "", ...input }),
+    );
 
     expect(repository.storage.categories).toHaveLength(1);
 

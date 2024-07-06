@@ -35,10 +35,8 @@ export class UpdateClientCommand implements UseCase<Input, void> {
       address: new Address(input.address),
     });
 
-    const duplicatedClient = await this.clientRepository.violateConstraint(
-      updatedClient,
-      client.props.id,
-    );
+    const duplicatedClient =
+      await this.clientRepository.alreadyInUse(updatedClient);
 
     if (duplicatedClient) {
       throw new ClientAlreadyCreatedError(input.name);

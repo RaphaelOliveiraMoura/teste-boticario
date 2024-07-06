@@ -23,7 +23,7 @@ describe("CreateClientCommand", () => {
     const sut = new CreateClientCommand(repository, encrypter);
 
     const createSpy = vi.spyOn(repository, "create");
-    const violateConstraintSpy = vi.spyOn(repository, "violateConstraint");
+    const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
     expect(repository.storage.clients).toHaveLength(0);
 
@@ -61,7 +61,7 @@ describe("CreateClientCommand", () => {
         address: new Address(input.address),
       }),
     );
-    expect(violateConstraintSpy).toHaveBeenCalledTimes(1);
+    expect(alreadyInUseSpy).toHaveBeenCalledTimes(1);
 
     expect(repository.storage.clients).toHaveLength(1);
 

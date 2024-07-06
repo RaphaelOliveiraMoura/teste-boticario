@@ -40,11 +40,8 @@ export class ClientDrizzleRepository implements IClientRepository {
     });
   }
 
-  async violateConstraint(
-    client: Client,
-    id?: string | undefined,
-  ): Promise<boolean> {
-    const [violates] = await this.drizzle
+  async alreadyInUse(client: Client): Promise<boolean> {
+    const [inUse] = await this.drizzle
       .select()
       .from(schema.cliente)
       .where(
@@ -54,12 +51,14 @@ export class ClientDrizzleRepository implements IClientRepository {
             eq(schema.cliente.cpf, client.props.cpf.value),
             eq(schema.cliente.telefone, client.props.phone.value),
           ),
-          ne(schema.cliente.cliente_id, Number(id)).if(id !== undefined),
+          ne(schema.cliente.cliente_id, Number(client.props.id)).if(
+            client.props.id !== undefined && client.props.id !== "",
+          ),
         ),
       )
       .limit(1);
 
-    return !!violates;
+    return !!inUse;
   }
 
   async findById(id: string): Promise<Client | null> {

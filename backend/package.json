@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node .",
-    "dev": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "rm -rf dist && tsc -p tsconfig-prod.json",
     "test": "vitest",
     "test:coverage": "vitest --coverage",

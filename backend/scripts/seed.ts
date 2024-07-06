@@ -2,7 +2,7 @@ import { DbConnection } from "@/main/services";
 import { fileSystem } from "@/main/services";
 
 fileSystem
-  .readFile(fileSystem.resolvePath("populate.sql", import.meta))
+  .readFile(fileSystem.resolvePath("populate.sql", __dirname))
   .then((sql) =>
     DbConnection.getInstance()
       .rawQuery(sql)

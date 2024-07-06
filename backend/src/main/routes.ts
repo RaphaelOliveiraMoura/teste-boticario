@@ -9,6 +9,7 @@ const controllers = [
   new CategoryController(),
   new ClientController(),
   new ProductController(),
+  new ClientController(),
 ];
 
 controllers.forEach((controller) => controller.route(httpServer));

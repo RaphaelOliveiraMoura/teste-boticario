@@ -19,12 +19,23 @@ export class CreateOrderCommand implements UseCase<Input, void> {
       throw new ClientNotFoundError(input.idClient);
     }
 
+    const products = input.products.map(
+      (product) =>
+        new OrderProduct({
+          idProduct: product.idProduct,
+          name: product.name,
+          quantity: product.quantity,
+          price: product.price,
+        }),
+    );
+
     const order = new Order({
       id: "",
       ...input,
       code: String(Math.random() * 1000), // todo: fix
       status: OrderEnum.pending,
       createdAt: new Date(),
+      products,
     });
 
     await this.orderRepository.create(order);
@@ -33,5 +44,10 @@ export class CreateOrderCommand implements UseCase<Input, void> {
 
 interface Input {
   idClient: string;
-  products: OrderProduct[];
+  products: {
+    idProduct: string;
+    name: string;
+    price: number;
+    quantity: number;
+  }[];
 }

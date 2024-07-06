@@ -1,11 +1,10 @@
 {
   "name": "backend",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node .",
+    "start": "node -r \"module-alias/register\" .",
     "dev": "tsx watch src/index.ts",
     "build": "rm -rf dist && tsc -p tsconfig-prod.json",
     "test": "vitest",
@@ -41,6 +40,10 @@
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.2",
     "fastify": "^4.28.1",
+    "module-alias": "^2.2.3",
     "pg": "^8.12.0"
+  },
+  "_moduleAliases": {
+    "@": "./dist"
   }
 }

@@ -27,7 +27,7 @@ export class UpdateCategoryCommand implements UseCase<Input, void> {
     category.props.name = input.name;
     category.props.description = input.description;
 
-    await this.categoryRepository.create(category);
+    await this.categoryRepository.update(category);
   }
 }
 

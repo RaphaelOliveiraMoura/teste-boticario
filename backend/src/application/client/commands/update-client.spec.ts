@@ -24,7 +24,7 @@ describe("UpdateClientCommand", () => {
 
     const client = ClientFakersFactory.generate({});
 
-    repository.storage.clients = [client];
+    repository.storage = [client];
 
     const sut = new UpdateClientCommand(repository, encrypter);
 
@@ -32,7 +32,7 @@ describe("UpdateClientCommand", () => {
     const findByIdSpy = vi.spyOn(repository, "findById");
     const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
-    expect(repository.storage.clients).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     const input = {
       id: client.props.id,
@@ -72,10 +72,8 @@ describe("UpdateClientCommand", () => {
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
     expect(alreadyInUseSpy).toHaveBeenCalledTimes(1);
 
-    expect(repository.storage.clients).toHaveLength(1);
-    expect(repository.storage.clients[0].props.email.value).toMatchObject(
-      input.email,
-    );
+    expect(repository.storage).toHaveLength(1);
+    expect(repository.storage[0].props.email.value).toMatchObject(input.email);
   });
 
   it("should return error if not found client to update", async () => {
@@ -107,7 +105,7 @@ describe("UpdateClientCommand", () => {
       new ClientNotFoundError(input.id),
     );
 
-    expect(repository.storage.clients).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 
   it("should return error if try update a client with a already used email", async () => {
@@ -128,7 +126,7 @@ describe("UpdateClientCommand", () => {
       }),
     ];
 
-    repository.storage.clients = clients;
+    repository.storage = clients;
 
     const sut = new UpdateClientCommand(repository, encrypter);
 
@@ -156,8 +154,6 @@ describe("UpdateClientCommand", () => {
       new ClientAlreadyCreatedError(input.name),
     );
 
-    expect(repository.storage.clients[1].props.email.value).toBe(
-      "email2@example.com",
-    );
+    expect(repository.storage[1].props.email.value).toBe("email2@example.com");
   });
 });

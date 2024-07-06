@@ -26,7 +26,7 @@ const cliente = pgTable(
     cliente_id: serial("cliente_id").primaryKey().notNull(),
     email: varchar("email", { length: 50 }),
     username: varchar("username", { length: 15 }),
-    senha: varchar("senha", { length: 20 }),
+    senha: varchar("senha", { length: 100 }),
     nome: varchar("nome", { length: 200 }),
     cpf: varchar("cpf", { length: 11 }).notNull(),
     telefone: varchar("telefone", { length: 11 }),

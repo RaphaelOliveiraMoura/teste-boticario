@@ -12,14 +12,14 @@ describe("DeleteClientCommand", () => {
 
     const client = ClientFakersFactory.generate({});
 
-    repository.storage.clients = [client];
+    repository.storage = [client];
 
     const sut = new DeleteClientCommand(repository);
 
     const removeSpy = vi.spyOn(repository, "remove");
     const findByIdSpy = vi.spyOn(repository, "findById");
 
-    expect(repository.storage.clients).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     const input = { id: "1" };
     await sut.execute(input);
@@ -27,7 +27,7 @@ describe("DeleteClientCommand", () => {
     expect(removeSpy).toHaveBeenCalledWith(input.id);
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
 
-    expect(repository.storage.clients).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 
   it("should return error if not found client to update", async () => {
@@ -41,6 +41,6 @@ describe("DeleteClientCommand", () => {
       new ClientNotFoundError(input.id),
     );
 
-    expect(repository.storage.clients).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 });

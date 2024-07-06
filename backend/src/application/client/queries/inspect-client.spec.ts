@@ -13,7 +13,7 @@ describe("InspectClientQuery", () => {
     const sut = new InspectClientQuery(dataSource);
 
     const client = ClientFakersFactory.generate({});
-    dataSource.storage.clients = [client];
+    dataSource.storage = [client];
 
     const inspectSpy = vi.spyOn(dataSource, "inspect");
 
@@ -47,7 +47,7 @@ describe("InspectClientQuery", () => {
 
     const sut = new InspectClientQuery(dataSource);
 
-    dataSource.storage.clients = [ClientFakersFactory.generate({})];
+    dataSource.storage = [ClientFakersFactory.generate({})];
 
     const input = { id: "2" };
 

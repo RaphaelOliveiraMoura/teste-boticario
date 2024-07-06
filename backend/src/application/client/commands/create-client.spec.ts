@@ -25,7 +25,7 @@ describe("CreateClientCommand", () => {
     const createSpy = vi.spyOn(repository, "create");
     const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
-    expect(repository.storage.clients).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
 
     const input = {
       email: "email@example.com",
@@ -63,14 +63,12 @@ describe("CreateClientCommand", () => {
     );
     expect(alreadyInUseSpy).toHaveBeenCalledTimes(1);
 
-    expect(repository.storage.clients).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
-    expect(repository.storage.clients[0].props).toMatchObject({
+    expect(repository.storage[0].props).toMatchObject({
       id: expect.any(String),
     });
-    expect(repository.storage.clients[0].props.email.value).toBe(
-      "email@example.com",
-    );
+    expect(repository.storage[0].props.email.value).toBe("email@example.com");
   });
 
   it("should throw error with try create a client that already exists", async () => {
@@ -97,13 +95,13 @@ describe("CreateClientCommand", () => {
       },
     };
 
-    expect(repository.storage.clients).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
     await sut.execute(input);
-    expect(repository.storage.clients).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     await expect(sut.execute(input)).rejects.toThrow(
       new ClientAlreadyCreatedError(input.name),
     );
-    expect(repository.storage.clients).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
   });
 });

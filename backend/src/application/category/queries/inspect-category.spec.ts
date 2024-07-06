@@ -12,7 +12,7 @@ describe("InspectCategoryQuery", () => {
 
     const sut = new InspectCategoryQuery(dataSource);
 
-    dataSource.storage.categories = [
+    dataSource.storage = [
       new Category({
         id: "1",
         name: "Categoria 1",
@@ -39,7 +39,7 @@ describe("InspectCategoryQuery", () => {
 
     const sut = new InspectCategoryQuery(dataSource);
 
-    dataSource.storage.categories = [
+    dataSource.storage = [
       new Category({
         id: "1",
         name: "Categoria 1",

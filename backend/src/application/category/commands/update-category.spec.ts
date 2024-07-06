@@ -17,7 +17,7 @@ describe("UpdateCategoryCommand", () => {
       description: "Descrição de exemplo",
     });
 
-    repository.storage.categories = [category];
+    repository.storage = [category];
 
     const sut = new UpdateCategoryCommand(repository);
 
@@ -25,7 +25,7 @@ describe("UpdateCategoryCommand", () => {
     const findByIdSpy = vi.spyOn(repository, "findById");
     const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
-    expect(repository.storage.categories).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     const input = {
       id: "1",
@@ -39,8 +39,8 @@ describe("UpdateCategoryCommand", () => {
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
     expect(alreadyInUseSpy).toHaveBeenCalledWith(new Category(input));
 
-    expect(repository.storage.categories).toHaveLength(1);
-    expect(repository.storage.categories[0].props).toMatchObject(input);
+    expect(repository.storage).toHaveLength(1);
+    expect(repository.storage[0].props).toMatchObject(input);
   });
 
   it("should return error if not found category to update", async () => {
@@ -58,13 +58,13 @@ describe("UpdateCategoryCommand", () => {
       new CategoryNotFoundError(input.id),
     );
 
-    expect(repository.storage.categories).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 
   it("should return error if try update a category with a already usage name", async () => {
     const repository = new CategoryRepositoryMemory();
 
-    repository.storage.categories = [
+    repository.storage = [
       new Category({
         id: "1",
         name: "Categoria 1",
@@ -95,7 +95,7 @@ describe("UpdateCategoryCommand", () => {
       new CategoryAlreadyCreatedError(input.name),
     );
 
-    expect(repository.storage.categories[1].props).toMatchObject({
+    expect(repository.storage[1].props).toMatchObject({
       id: "2",
       name: "Categoria 2 atualizada",
       description: "Outra descrição",

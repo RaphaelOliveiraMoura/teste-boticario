@@ -16,14 +16,14 @@ describe("DeleteCategoryCommand", () => {
       description: "Descrição de exemplo",
     });
 
-    repository.storage.categories = [category];
+    repository.storage = [category];
 
     const sut = new DeleteCategoryCommand(repository);
 
     const removeSpy = vi.spyOn(repository, "remove");
     const findByIdSpy = vi.spyOn(repository, "findById");
 
-    expect(repository.storage.categories).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     const input = { id: "1" };
     await sut.execute(input);
@@ -31,7 +31,7 @@ describe("DeleteCategoryCommand", () => {
     expect(removeSpy).toHaveBeenCalledWith(input.id);
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
 
-    expect(repository.storage.categories).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 
   it("should return error if not found category to update", async () => {
@@ -45,6 +45,6 @@ describe("DeleteCategoryCommand", () => {
       new CategoryNotFoundError(input.id),
     );
 
-    expect(repository.storage.categories).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
   });
 });

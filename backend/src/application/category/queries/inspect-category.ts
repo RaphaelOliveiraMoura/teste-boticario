@@ -1,7 +1,7 @@
-import { ICategoryDataSource } from "./data-source";
 import { CategoryNotFoundError } from "../errors/not-foud";
 
 import { UseCase } from "@/application";
+import { ICategoryDataSource } from "@/domain/data-sources/category";
 
 export class InspectCategoryQuery implements UseCase<Input, Output> {
   constructor(private readonly categoryDataSource: ICategoryDataSource) {}

@@ -15,7 +15,7 @@ describe("CreateCategoryCommand", () => {
     const createSpy = vi.spyOn(repository, "create");
     const alreadyInUseSpy = vi.spyOn(repository, "alreadyInUse");
 
-    expect(repository.storage.categories).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
 
     const input = {
       name: "Categoria de testes",
@@ -29,9 +29,9 @@ describe("CreateCategoryCommand", () => {
       new Category({ id: "", ...input }),
     );
 
-    expect(repository.storage.categories).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
-    expect(repository.storage.categories[0].props).toMatchObject({
+    expect(repository.storage[0].props).toMatchObject({
       id: expect.any(String),
       ...input,
     });
@@ -47,13 +47,13 @@ describe("CreateCategoryCommand", () => {
       description: "Descrição de exemplo",
     };
 
-    expect(repository.storage.categories).toHaveLength(0);
+    expect(repository.storage).toHaveLength(0);
     await sut.execute(input);
-    expect(repository.storage.categories).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
 
     await expect(sut.execute(input)).rejects.toThrow(
       new CategoryAlreadyCreatedError(input.name),
     );
-    expect(repository.storage.categories).toHaveLength(1);
+    expect(repository.storage).toHaveLength(1);
   });
 });

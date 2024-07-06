@@ -11,7 +11,7 @@ describe("ListCategoriesQuery", () => {
 
     const sut = new ListCategoriesQuery(dataSource);
 
-    dataSource.storage.categories = [
+    dataSource.storage = [
       new Category({
         id: "1",
         name: "Categoria 1",

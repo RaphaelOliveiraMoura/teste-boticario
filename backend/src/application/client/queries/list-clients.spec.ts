@@ -11,7 +11,7 @@ describe("ListClientsQuery", () => {
 
     const sut = new ListClientsQuery(dataSource);
 
-    dataSource.storage.clients = [
+    dataSource.storage = [
       ClientFakersFactory.generate({
         id: "1",
         email: "email1@example.com",

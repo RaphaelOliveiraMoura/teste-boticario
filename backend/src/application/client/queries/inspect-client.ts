@@ -1,7 +1,10 @@
-import { IClientDataSource, InspectClientDto } from "./data-source";
 import { ClientNotFoundError } from "../errors/not-foud";
 
 import { UseCase } from "@/application";
+import {
+  IClientDataSource,
+  InspectClientDto,
+} from "@/domain/data-sources/client";
 
 export class InspectClientQuery implements UseCase<Input, Output> {
   constructor(private readonly clientDataSource: IClientDataSource) {}

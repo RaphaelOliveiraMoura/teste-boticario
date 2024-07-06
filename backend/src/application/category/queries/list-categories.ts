@@ -1,6 +1,5 @@
-import { ICategoryDataSource } from "./data-source";
-
 import { UseCase } from "@/application";
+import { ICategoryDataSource } from "@/domain/data-sources/category";
 
 export class ListCategoriesQuery implements UseCase<undefined, Output> {
   constructor(private readonly categoryDataSource: ICategoryDataSource) {}

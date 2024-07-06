@@ -59,4 +59,10 @@ export class CategoryDrizzleRepository implements ICategoryRepository {
       })
       .where(eq(schema.categoria.categoria_id, +category.props.id));
   }
+
+  async remove(id: string): Promise<void> {
+    await this.drizzle
+      .delete(schema.categoria)
+      .where(eq(schema.categoria.categoria_id, +id));
+  }
 }

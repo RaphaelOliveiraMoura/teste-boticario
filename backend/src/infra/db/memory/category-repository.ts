@@ -38,4 +38,14 @@ export class CategoryRepositoryMemory implements ICategoryRepository {
     if (!dbCategory) throw new Error("CategoryNotFound");
     dbCategory.props = category.props;
   }
+
+  async remove(id: string): Promise<void> {
+    const idx = this.storage.categories.findIndex(
+      (category) => category.props.id === id,
+    );
+
+    if (idx < 0) return;
+
+    this.storage.categories.splice(idx, 1);
+  }
 }

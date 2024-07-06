@@ -1,5 +1,11 @@
-import { categoryDataSource, categoryRepository } from "./storage";
+import { encrypter, hasher } from "./services";
+import {
+  categoryDataSource,
+  categoryRepository,
+  clientRepository,
+} from "./storage";
 
+import { SignInUseCase } from "@/application/auth/use-case/sign-in";
 import { CreateCategoryCommand } from "@/application/category/commands/create-category";
 import { DeleteCategoryCommand } from "@/application/category/commands/delete-category";
 import { UpdateCategoryCommand } from "@/application/category/commands/update-category";
@@ -18,4 +24,10 @@ export const updateCategoryCommand = new UpdateCategoryCommand(
 );
 export const deleteCategoryCommand = new DeleteCategoryCommand(
   categoryRepository,
+);
+
+export const signInUseCase = new SignInUseCase(
+  clientRepository,
+  encrypter,
+  hasher,
 );

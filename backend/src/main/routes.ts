@@ -4,8 +4,18 @@ import {
   updateCategoryCommand,
   deleteCategoryCommand,
   listCategoriesQuery,
-} from "./queries-and-commands";
+  signInUseCase,
+} from "./application";
 import { httpServer } from "./services";
+
+httpServer.bind<{ Body: { username: string; password: string } }>(
+  "POST",
+  "/sign-in",
+  async ({ body }) => {
+    const data = await signInUseCase.execute(body);
+    return { data, status: 200 };
+  },
+);
 
 httpServer.bind("GET", "/categories", async () => {
   const data = await listCategoriesQuery.execute();

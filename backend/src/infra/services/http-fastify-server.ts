@@ -50,7 +50,7 @@ export class HttpFastifyServer implements IHttpServer {
         const response = await callback({
           body: request.body as T["Body"],
           headers: request.headers as T["Headers"],
-          params: request.params as T["Body"],
+          params: request.params as T["Params"],
         });
 
         return reply.status(response.status).send(response.data);

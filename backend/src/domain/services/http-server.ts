@@ -1,6 +1,6 @@
 export interface HttpCallbackParamsTypes {
   Headers?: Record<string, string>;
-  Body?: Record<string, string>;
+  Body?: object;
   Params?: Record<string, string>;
 }
 

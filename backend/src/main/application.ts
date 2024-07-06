@@ -2,6 +2,7 @@ import { encrypter, hasher } from "./services";
 import {
   categoryDataSource,
   categoryRepository,
+  clientDataSource,
   clientRepository,
 } from "./storage";
 
@@ -11,6 +12,17 @@ import { DeleteCategoryCommand } from "@/application/category/commands/delete-ca
 import { UpdateCategoryCommand } from "@/application/category/commands/update-category";
 import { InspectCategoryQuery } from "@/application/category/queries/inspect-category";
 import { ListCategoriesQuery } from "@/application/category/queries/list-categories";
+import { CreateClientCommand } from "@/application/client/commands/create-client";
+import { DeleteClientCommand } from "@/application/client/commands/delete-client";
+import { UpdateClientCommand } from "@/application/client/commands/update-client";
+import { InspectClientQuery } from "@/application/client/queries/inspect-client";
+import { ListClientsQuery } from "@/application/client/queries/list-clients";
+
+export const signInUseCase = new SignInUseCase(
+  clientRepository,
+  encrypter,
+  hasher,
+);
 
 export const inspectCategoryQuery = new InspectCategoryQuery(
   categoryDataSource,
@@ -26,8 +38,14 @@ export const deleteCategoryCommand = new DeleteCategoryCommand(
   categoryRepository,
 );
 
-export const signInUseCase = new SignInUseCase(
+export const inspectClientQuery = new InspectClientQuery(clientDataSource);
+export const listClientsQuery = new ListClientsQuery(clientDataSource);
+export const createClientCommand = new CreateClientCommand(
   clientRepository,
   encrypter,
-  hasher,
 );
+export const updateClientCommand = new UpdateClientCommand(
+  clientRepository,
+  encrypter,
+);
+export const deleteClientCommand = new DeleteClientCommand(clientRepository);

@@ -12,7 +12,8 @@ describe("InspectClientQuery", () => {
 
     const sut = new InspectClientQuery(dataSource);
 
-    dataSource.storage.clients = [ClientFakersFactory.generate({})];
+    const client = ClientFakersFactory.generate({});
+    dataSource.storage.clients = [client];
 
     const inspectSpy = vi.spyOn(dataSource, "inspect");
 
@@ -20,9 +21,22 @@ describe("InspectClientQuery", () => {
     const output = await sut.execute(input);
 
     expect(output).toMatchObject({
-      id: "1",
-      name: "Categoria 1",
-      description: "Descricao 1",
+      id: client.props.id,
+      email: client.props.email.value,
+      username: client.props.username,
+      name: client.props.name,
+      cpf: client.props.cpf.value,
+      phone: client.props.phone.value,
+      birthDate: client.props.birthDate.toISOString(),
+      address: {
+        cep: client.props.address?.props.cep ?? "",
+        state: client.props.address?.props.state ?? "",
+        city: client.props.address?.props.city ?? "",
+        neighborhood: client.props.address?.props.neighborhood ?? "",
+        address: client.props.address?.props.address ?? "",
+        number: client.props.address?.props.number ?? "",
+        complement: client.props.address?.props.complement ?? "",
+      },
     });
 
     expect(inspectSpy).toHaveBeenCalledWith(input.id);

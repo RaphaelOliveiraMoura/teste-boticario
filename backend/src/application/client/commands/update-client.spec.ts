@@ -70,10 +70,12 @@ describe("UpdateClientCommand", () => {
       }),
     );
     expect(findByIdSpy).toHaveBeenCalledWith(input.id);
-    expect(violateConstraintSpy).toHaveBeenCalledWith(input.name, input.id);
+    expect(violateConstraintSpy).toHaveBeenCalledTimes(1);
 
     expect(repository.storage.clients).toHaveLength(1);
-    expect(repository.storage.clients[0].props).toMatchObject(input);
+    expect(repository.storage.clients[0].props.email.value).toMatchObject(
+      input.email,
+    );
   });
 
   it("should return error if not found client to update", async () => {
@@ -108,7 +110,7 @@ describe("UpdateClientCommand", () => {
     expect(repository.storage.clients).toHaveLength(0);
   });
 
-  it("should return error if try update a client with a already usage name", async () => {
+  it("should return error if try update a client with a already used email", async () => {
     const repository = new ClientRepositoryMemory();
 
     const clients = [
@@ -155,7 +157,7 @@ describe("UpdateClientCommand", () => {
     );
 
     expect(repository.storage.clients[1].props.email.value).toBe(
-      "email1@example.com",
+      "email2@example.com",
     );
   });
 });

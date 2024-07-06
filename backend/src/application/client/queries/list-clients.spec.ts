@@ -41,18 +41,21 @@ describe("ListClientsQuery", () => {
     expect(output).toMatchObject([
       {
         id: "1",
-        name: "Categoria 1",
-        description: "Descricao 1",
+        email: "email1@example.com",
+        cpf: "11111111111",
+        phone: "11111111111",
       },
       {
         id: "2",
-        name: "Categoria 2",
-        description: "Descricao 2",
+        email: "email2@example.com",
+        cpf: "22222222222",
+        phone: "22222222222",
       },
       {
         id: "3",
-        name: "Categoria 3",
-        description: "Descricao 3",
+        email: "email3@example.com",
+        cpf: "33333333333",
+        phone: "33333333333",
       },
     ]);
   });

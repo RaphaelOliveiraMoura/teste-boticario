@@ -10,7 +10,11 @@ export class ClientDataSoruceMemory implements IClientDataSource {
     clients: [] as Client[],
   };
 
-  private mapClientToDto(client: Client): InspectClientDto {
+  async inspect(id: string): Promise<InspectClientDto | null> {
+    const client = this.storage.clients.find(({ props }) => props.id === id);
+
+    if (!client) return null;
+
     return {
       id: client.props.id,
       email: client.props.email.value,
@@ -31,15 +35,15 @@ export class ClientDataSoruceMemory implements IClientDataSource {
     };
   }
 
-  async inspect(id: string): Promise<InspectClientDto | null> {
-    const client = this.storage.clients.find(({ props }) => props.id === id);
-
-    if (!client) return null;
-
-    return this.mapClientToDto(client);
-  }
-
   async list(): Promise<ListClientDto[]> {
-    return this.storage.clients.map(this.mapClientToDto);
+    return this.storage.clients.map((client) => ({
+      id: client.props.id,
+      email: client.props.email.value,
+      username: client.props.username,
+      name: client.props.name,
+      cpf: client.props.cpf.value,
+      phone: client.props.phone.value,
+      birthDate: client.props.birthDate.toISOString(),
+    }));
   }
 }

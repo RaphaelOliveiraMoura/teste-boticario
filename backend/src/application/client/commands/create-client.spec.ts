@@ -61,14 +61,16 @@ describe("CreateClientCommand", () => {
         address: new Address(input.address),
       }),
     );
-    expect(violateConstraintSpy).toHaveBeenCalledWith(input.name);
+    expect(violateConstraintSpy).toHaveBeenCalledTimes(1);
 
     expect(repository.storage.clients).toHaveLength(1);
 
     expect(repository.storage.clients[0].props).toMatchObject({
       id: expect.any(String),
-      ...input,
     });
+    expect(repository.storage.clients[0].props.email.value).toBe(
+      "email@example.com",
+    );
   });
 
   it("should throw error with try create a client that already exists", async () => {

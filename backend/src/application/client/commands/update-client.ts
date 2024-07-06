@@ -23,15 +23,6 @@ export class UpdateClientCommand implements UseCase<Input, void> {
       throw new ClientNotFoundError(input.id);
     }
 
-    const duplicatedClient = await this.clientRepository.violateConstraint(
-      client,
-      client.props.id,
-    );
-
-    if (duplicatedClient) {
-      throw new ClientAlreadyCreatedError(input.name);
-    }
-
     const updatedClient = new Client({
       id: client.props.id,
       email: new Email(input.email),
@@ -43,6 +34,15 @@ export class UpdateClientCommand implements UseCase<Input, void> {
       birthDate: input.birthDate,
       address: new Address(input.address),
     });
+
+    const duplicatedClient = await this.clientRepository.violateConstraint(
+      updatedClient,
+      client.props.id,
+    );
+
+    if (duplicatedClient) {
+      throw new ClientAlreadyCreatedError(input.name);
+    }
 
     await this.clientRepository.update(updatedClient);
   }

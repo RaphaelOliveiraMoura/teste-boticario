@@ -65,7 +65,11 @@ export const product = {
 export const order = {
   inspect: new InspectOrderQuery(orderDataSource),
   list: new ListOrdersQuery(orderDataSource),
-  create: new CreateOrderCommand(orderRepository, clientRepository),
+  create: new CreateOrderCommand(
+    orderRepository,
+    clientRepository,
+    productRepository,
+  ),
   update: new UpdateOrderCommand(orderRepository),
   delete: new DeleteOrderCommand(orderRepository),
 };

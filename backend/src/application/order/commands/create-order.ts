@@ -1,15 +1,18 @@
 import { ClientNotFoundError } from "../errors/client-not-found";
+import { ProductNotFoundError } from "../errors/product-not-found";
 
 import { UseCase } from "@/application";
 import { Order, OrderEnum } from "@/domain/entities/order";
 import { OrderProduct } from "@/domain/entities/order-product";
 import { IClientRepository } from "@/domain/repositories/client-repository";
 import { IOrderRepository } from "@/domain/repositories/order-repository";
+import { IProductRepository } from "@/domain/repositories/product-repository";
 
 export class CreateOrderCommand implements UseCase<Input, void> {
   constructor(
     private readonly orderRepository: IOrderRepository,
     private readonly clientRepository: IClientRepository,
+    private readonly productRepository: IProductRepository,
   ) {}
 
   async execute(input: Input): Promise<void> {
@@ -19,15 +22,23 @@ export class CreateOrderCommand implements UseCase<Input, void> {
       throw new ClientNotFoundError(input.idClient);
     }
 
-    const products = input.products.map(
-      (product) =>
-        new OrderProduct({
-          idProduct: product.idProduct,
-          name: product.name,
-          quantity: product.quantity,
-          price: product.price,
-        }),
-    );
+    const products = [];
+
+    for (const productItem of input.products) {
+      const product = await this.productRepository.findById(
+        productItem.idProduct,
+      );
+
+      if (!product) {
+        throw new ProductNotFoundError(productItem.idProduct);
+      }
+
+      products.push(
+        new OrderProduct({ product, quantity: productItem.quantity }),
+      );
+
+      product.decreaseStock(productItem.quantity);
+    }
 
     const order = new Order({
       id: "",
@@ -47,7 +58,6 @@ interface Input {
   products: {
     idProduct: string;
     name: string;
-    price: number;
     quantity: number;
   }[];
 }

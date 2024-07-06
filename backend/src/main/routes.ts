@@ -4,8 +4,8 @@ import {
   updateCategoryCommand,
   deleteCategoryCommand,
   listCategoriesQuery,
-} from "./main/queries-and-commands";
-import { httpServer } from "./main/services";
+} from "./queries-and-commands";
+import { httpServer } from "./services";
 
 httpServer.bind("GET", "/categories", async () => {
   const data = await listCategoriesQuery.execute();

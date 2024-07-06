@@ -1,6 +1,6 @@
 import { DbConnection, httpServer } from "./main/services";
 
-import "./routes";
+import "./main/routes";
 
 DbConnection.getInstance()
   .initialize()

@@ -1,5 +1,6 @@
 export interface EnvType {
-  DB_CONNECION_URL: boolean;
+  PORT: string;
+  DB_CONNECION_URL: string;
 }
 
 export interface IConfigService {

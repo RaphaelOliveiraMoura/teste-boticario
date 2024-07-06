@@ -24,7 +24,7 @@ export class ClientController implements Controller {
     );
 
     httpServer.bind<{ Body: ClientBody }>(
-      { method: "POST", path: "/clients", requireAuth: true },
+      { method: "POST", path: "/clients" },
       async ({ body }) => {
         const data = await client.create.execute({
           ...body,

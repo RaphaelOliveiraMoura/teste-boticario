@@ -16,7 +16,11 @@ export class VerifyAuthUseCase implements UseCase<Input, Output> {
       throw new InvalidAuthenticationError();
     }
 
-    const token = await this.hashService.decode<{ id: string }>(input.token);
+    const token = await this.hashService
+      .decode<{ id: string }>(input.token)
+      .catch(() => {
+        throw new InvalidAuthenticationError();
+      });
 
     const client = await this.clientRepository.findById(token.id);
 

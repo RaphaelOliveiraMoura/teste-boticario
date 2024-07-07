@@ -1,12 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { formSchema, Input } from "@/domain/use-cases/sign-in";
 import { Form } from "@/ui/components/form";
 import { InputText } from "@/ui/components/input-text";
+import { Link } from "@/ui/components/link";
 import { useService } from "@/ui/hooks/use-service";
 import { Pages } from "@/ui/pages";
 import { Button } from "@/ui/shadcn/button";
@@ -36,7 +36,7 @@ export default function Page() {
         </Button>
 
         <Link href={Pages.SignUp()} className="text-center">
-          <button type="button">Não tem cadastro?</button>
+          Não tem cadastro?
         </Link>
       </div>
     </Form>

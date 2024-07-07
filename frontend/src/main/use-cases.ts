@@ -1,5 +1,5 @@
-import { SignInUseCase } from "@/domain/use-cases/sign-in";
+import { SignInFetchUseCase } from "@/infra/use-cases/sign-in-fetch";
 
-import { authDataSource } from "./data-source";
+import { httpClient } from "./services";
 
-export const signInUseCase = new SignInUseCase(authDataSource);
+export const signInUseCase = new SignInFetchUseCase(httpClient);

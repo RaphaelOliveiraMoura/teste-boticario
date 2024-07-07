@@ -1,8 +1,8 @@
-import { AuthDataSource } from "@/domain/data-source/auth";
 import { InvalidCredentialsError } from "@/domain/errors/auth";
+import { SignInUseCase } from "@/domain/use-cases/sign-in";
 
-export class AuthMemoryDataSource implements AuthDataSource {
-  async getAuthToken(props: {
+export class SignInMemoryUseCase implements SignInUseCase {
+  async execute(props: {
     login: string;
     password: string;
   }): Promise<{ token: string }> {

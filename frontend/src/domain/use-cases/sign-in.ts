@@ -1,19 +1,12 @@
 import { UseCase } from ".";
-import { AuthDataSource } from "../data-source/auth";
 
-export class SignInUseCase implements UseCase<Input, Output> {
-  constructor(private readonly authDataSource: AuthDataSource) {}
+export interface SignInUseCase extends UseCase<Input, Output> {}
 
-  execute(input: Input): Promise<Output> {
-    return this.authDataSource.getAuthToken(input);
-  }
-}
-
-type Input = {
+export type Input = {
   login: string;
   password: string;
 };
 
-type Output = {
+export type Output = {
   token: string;
 };

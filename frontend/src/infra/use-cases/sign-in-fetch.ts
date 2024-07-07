@@ -1,11 +1,11 @@
-import { AuthDataSource } from "@/domain/data-source/auth";
 import { InvalidCredentialsError } from "@/domain/errors/auth";
 import { HttpClient } from "@/domain/services/http-client";
+import { SignInUseCase } from "@/domain/use-cases/sign-in";
 
-export class AuthFetchDataSource implements AuthDataSource {
+export class SignInFetchUseCase implements SignInUseCase {
   constructor(private readonly httpClient: HttpClient) {}
 
-  async getAuthToken(props: {
+  async execute(props: {
     login: string;
     password: string;
   }): Promise<{ token: string }> {

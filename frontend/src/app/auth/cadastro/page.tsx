@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-import { formSchema, Input } from "@/domain/use-cases/sign-in";
+import { formSchema, Input } from "@/domain/use-cases/sign-up";
 import { Form } from "@/ui/components/form";
 import { InputText } from "@/ui/components/input-text";
 import { useService } from "@/ui/hooks/use-service";
@@ -21,7 +21,11 @@ export default function Page() {
     disabled: isPending,
     defaultValues: {
       username: "",
+      email: "",
+      cpf: "",
+      name: "",
       password: "",
+      phone: "",
     },
   });
 

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { InvalidCredentialsError } from "@/domain/errors/auth";
+import { defaultErrorMessages } from "@/domain/errors/messages";
 import { Input } from "@/domain/use-cases/sign-in";
 import { signInUseCase } from "@/main/use-cases";
 import { Pages } from "@/ui/pages";
@@ -20,10 +21,7 @@ export const submit = async (data: Input) => {
       };
     }
 
-    return {
-      error: "Erro ao se comunicar com o servidor",
-      description: "Verifique se está conectado a internet",
-    };
+    return defaultErrorMessages.default;
   }
 
   redirect(Pages.ListOrder());

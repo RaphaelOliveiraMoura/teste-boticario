@@ -10,6 +10,13 @@ import { Link } from "@/ui/components/link";
 import { useService } from "@/ui/hooks/use-service";
 import { Pages } from "@/ui/pages";
 import { Button } from "@/ui/shadcn/button";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/ui/shadcn/card";
 
 import { submit } from "./actions";
 
@@ -26,19 +33,33 @@ export default function Page() {
   });
 
   return (
-    <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-5">
-        <InputText form={form} label="Usuário" name="username" />
-        <InputText form={form} label="Senha" name="password" type="password" />
+    <>
+      <CardHeader>
+        <CardTitle>Faça seu login</CardTitle>
+        <CardDescription>
+          Utilize o seu usuário se senha para acessar a plataforma
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-5">
+            <InputText form={form} label="Usuário" name="username" />
+            <InputText
+              form={form}
+              label="Senha"
+              name="password"
+              type="password"
+            />
 
-        <Button disabled={isPending} type="submit">
-          Entrar
-        </Button>
-
-        <Link href={Pages.SignUp()} className="text-center">
-          Não tem cadastro?
-        </Link>
-      </div>
-    </Form>
+            <Button disabled={isPending} type="submit">
+              Entrar
+            </Button>
+          </div>
+        </Form>
+      </CardContent>
+      <CardFooter className="flex justify-end">
+        <Link href={Pages.SignUp()}>Não possuo cadastro</Link>
+      </CardFooter>
+    </>
   );
 }

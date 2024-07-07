@@ -1,5 +1,6 @@
 export const Pages = {
-  SignUp: () => "/cadastro",
+  SignIn: () => "/auth",
+  SignUp: () => "/auth/cadastro",
 
   ListOrder: () => "/",
 };

@@ -1,12 +1,9 @@
 import { InvalidCredentialsError } from "@/domain/errors/auth";
-import { SignInUseCase } from "@/domain/use-cases/sign-in";
+import { SignInUseCase, Input, Output } from "@/domain/use-cases/sign-in";
 
 export class SignInMemoryUseCase implements SignInUseCase {
-  async execute(props: {
-    login: string;
-    password: string;
-  }): Promise<{ token: string }> {
-    if (props.login !== "admin" && props.password !== "admin") {
+  async execute(props: Input): Promise<Output> {
+    if (props.username !== "admin" && props.password !== "admin123") {
       throw new InvalidCredentialsError();
     }
 

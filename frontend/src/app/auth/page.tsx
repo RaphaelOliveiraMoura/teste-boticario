@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
+import { formSchema } from "@/domain/use-cases/sign-in";
 import { Form } from "@/ui/components/form";
 import { InputText } from "@/ui/components/input-text";
 import { useService } from "@/ui/hooks/use-service";
@@ -11,7 +12,6 @@ import { Pages } from "@/ui/pages";
 import { Button } from "@/ui/shadcn/button";
 
 import { submit } from "./actions";
-import { formSchema } from "./form";
 
 export default function Page() {
   const { isPending, onSubmit } = useService({ submit });

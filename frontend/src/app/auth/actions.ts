@@ -3,20 +3,16 @@
 import { redirect } from "next/navigation";
 
 import { InvalidCredentialsError } from "@/domain/errors/auth";
+import { Input } from "@/domain/use-cases/sign-in";
 import { signInUseCase } from "@/main/use-cases";
 import { Pages } from "@/ui/pages";
 
-import { FormType } from "./form";
-
-export const submit = async (data: FormType) => {
+export const submit = async (data: Input) => {
   try {
-    await signInUseCase.execute({
-      login: data.username,
-      password: data.password,
-    });
-
-    redirect(Pages.ListOrder());
+    await signInUseCase.execute(data);
   } catch (error) {
+    console.error(error);
+
     if (error instanceof InvalidCredentialsError) {
       return {
         error: "Credenciais inválidas",
@@ -29,4 +25,6 @@ export const submit = async (data: FormType) => {
       description: "Verifique se está conectado a internet",
     };
   }
+
+  redirect(Pages.ListOrder());
 };

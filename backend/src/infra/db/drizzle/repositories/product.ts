@@ -16,8 +16,8 @@ export class ProductDrizzleRepository implements IProductRepository {
       .from(schema.produto)
       .where(
         and(
-          eq(schema.categoria.nome_categoria, product.props.name),
-          ne(schema.categoria.categoria_id, Number(product.props.id)).if(
+          eq(schema.produto.nome_produto, product.props.name),
+          ne(schema.produto.produto_id, Number(product.props.id)).if(
             product.props.id !== undefined && product.props.id !== "",
           ),
         ),

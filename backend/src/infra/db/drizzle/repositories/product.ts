@@ -80,7 +80,7 @@ export class ProductDrizzleRepository implements IProductRepository {
         qtd_estoque: product.props.stock,
         categoria_id: +product.props.category.props.id,
       })
-      .where(eq(schema.categoria.categoria_id, +product.props.id));
+      .where(eq(schema.produto.produto_id, +product.props.id));
   }
 
   async remove(id: string): Promise<void> {

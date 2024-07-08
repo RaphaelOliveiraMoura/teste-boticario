@@ -100,7 +100,7 @@ export class OrderDrizzleRepository implements IOrderRepository {
       .set({
         status: order.props.status === OrderEnum.finished ? true : false,
       })
-      .where(eq(schema.categoria.categoria_id, +order.props.id));
+      .where(eq(schema.pedido, +order.props.id));
   }
 
   async remove(id: string): Promise<void> {

@@ -41,7 +41,7 @@ export const validateBody = async (body: ClientBody) => {
   if (!body.birthDate) errors.push("birthDate is required");
 
   if (!body.address.cep) errors.push("address.cep is required");
-  if (body.address.cep.length !== 9) errors.push("cep invalid");
+  if (body.address.cep.length !== 8) errors.push("cep invalid");
 
   if (!body.address.state) errors.push("address.state is required");
   if (body.address.state.length !== 2) errors.push("state invalid");

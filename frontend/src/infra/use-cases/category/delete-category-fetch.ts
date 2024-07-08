@@ -15,7 +15,7 @@ export class DeleteCategoryFetchUseCase implements DeleteCategoryUseCase {
       url: `/categories/${props.id}`,
     });
 
-    if (status !== 200) {
+    if (status !== 204) {
       throw new ValidationError();
     }
   }

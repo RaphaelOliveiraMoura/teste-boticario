@@ -15,7 +15,7 @@ export class DeleteProductFetchUseCase implements DeleteProductUseCase {
       url: `/products/${props.id}`,
     });
 
-    if (status !== 200) {
+    if (status !== 204) {
       throw new ValidationError();
     }
   }

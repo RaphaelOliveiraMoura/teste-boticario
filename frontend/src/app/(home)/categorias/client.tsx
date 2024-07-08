@@ -36,7 +36,7 @@ export function PageClient({ output }: PageClientProps) {
     useService({
       submit: remove,
       onSuccess: () => {
-        toast({ title: "Produto excluído com sucesso", description: "" });
+        toast({ title: "Categoria excluído com sucesso", description: "" });
         setCategoryToRemove(undefined);
       },
     });
@@ -81,7 +81,7 @@ export function PageClient({ output }: PageClientProps) {
   return (
     <section>
       <div className="my-4 flex justify-end">
-        <Link href={Pages.CreateProduct()}>
+        <Link href={Pages.CreateCategory()}>
           <Button>
             <PlusCircle className="mr-2" />
             Adicionar
@@ -96,7 +96,7 @@ export function PageClient({ output }: PageClientProps) {
           isOpen={!!categoryToRemove}
           close={() => setCategoryToRemove(undefined)}
           title={`Tem certeza que deseja excluir o item "${categoryToRemove.name}"`}
-          description="Essa ação é irreversível, caso queira recuperar o produto não será mais possível"
+          description="Essa ação é irreversível, caso queira recuperar a categoria não será mais possível"
           onConfirm={() => handleRemove({ id: categoryToRemove.id })}
           isPending={handleRemoveIsPending}
         />

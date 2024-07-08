@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { InvalidCredentialsError } from "@/domain/errors/auth";
 import { defaultErrorMessages } from "@/domain/errors/messages";
 import { Input } from "@/domain/use-cases/sign-in";
-import { signInUseCase } from "@/main/use-cases";
+import { auth } from "@/main/use-cases";
 import { Pages } from "@/ui/pages";
 
 export const submit = async (data: Input) => {
   try {
-    await signInUseCase.execute(data);
+    await auth.signIn.execute(data);
   } catch (error) {
     console.error(error);
 

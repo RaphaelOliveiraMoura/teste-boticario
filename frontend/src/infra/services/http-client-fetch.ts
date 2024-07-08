@@ -21,7 +21,7 @@ export class HttpClientFetch implements HttpClient {
 
     const body = params.body ? JSON.stringify(params.body) : undefined;
 
-    console.info(`[${params.url}]`, { body });
+    console.info(`[${params.method} ${params.url}]`, { body });
 
     const response = await fetch(this.baseUrl + params.url, {
       method: params.method,
@@ -33,10 +33,10 @@ export class HttpClientFetch implements HttpClient {
       body,
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => undefined);
     const status = response.status;
 
-    console.info(`[${params.url}]`, { data, status });
+    console.info(`[${params.method} ${params.url}]`, { data, status });
 
     if (status === 401) {
       throw new InvalidAuthError();

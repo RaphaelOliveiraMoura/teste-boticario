@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+import { ListItem as CategoryItem } from "@/domain/use-cases/category/list";
 import { FormType, formSchema } from "@/domain/use-cases/product/create";
 import { Form } from "@/ui/components/form";
+import { InputSelect } from "@/ui/components/input-select";
 import { InputText } from "@/ui/components/input-text";
 import { useService } from "@/ui/hooks/use-service";
 import { Pages } from "@/ui/pages";
@@ -18,9 +20,15 @@ type PageClientProps = {
   id: string;
   defaultValues: FormType;
   isCreating: boolean;
+  categories: CategoryItem[];
 };
 
-export function PageClient({ defaultValues, isCreating, id }: PageClientProps) {
+export function PageClient({
+  defaultValues,
+  isCreating,
+  id,
+  categories,
+}: PageClientProps) {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -52,6 +60,15 @@ export function PageClient({ defaultValues, isCreating, id }: PageClientProps) {
             form={form}
             label="Descrição do produto"
             name="description"
+          />
+          <InputSelect
+            form={form}
+            label="Categoria"
+            name="category"
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
           />
           <InputText
             form={form}

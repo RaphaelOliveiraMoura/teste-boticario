@@ -19,6 +19,7 @@ export class UpdateProductFetchUseCase implements UpdateProductUseCase {
         price: props.price,
         stock: props.stock,
         image: props.image,
+        idCategory: props.category.value,
       },
     });
 

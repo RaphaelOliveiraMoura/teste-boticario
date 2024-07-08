@@ -1,3 +1,4 @@
+import { ValidationError } from "@/domain/errors/validation";
 import { HttpClient } from "@/domain/services/http-client";
 import {
   CreateProductUseCase,
@@ -9,7 +10,7 @@ export class CreateProductFetchUseCase implements CreateProductUseCase {
   constructor(private readonly httpClient: HttpClient) {}
 
   async execute(props: Input): Promise<Output> {
-    await this.httpClient.request({
+    const { status } = await this.httpClient.request({
       method: "POST",
       url: "/products",
       body: {
@@ -18,7 +19,12 @@ export class CreateProductFetchUseCase implements CreateProductUseCase {
         price: props.price,
         stock: props.stock,
         image: props.image,
+        idCategory: props.category.value,
       },
     });
+
+    if (status !== 201) {
+      throw new ValidationError();
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { ValidationError } from "@/domain/errors/validation";
 import { HttpClient } from "@/domain/services/http-client";
 import {
   InspectProductUseCase,
@@ -9,10 +10,14 @@ export class InspectProductFetchUseCase implements InspectProductUseCase {
   constructor(private readonly httpClient: HttpClient) {}
 
   async execute(props: Input): Promise<Output> {
-    const { data } = await this.httpClient.request<ApiReturnType>({
+    const { data, status } = await this.httpClient.request<ApiReturnType>({
       method: "GET",
       url: `/products/${props.id}`,
     });
+
+    if (status !== 200) {
+      throw new ValidationError();
+    }
 
     return {
       id: data.id,
@@ -21,6 +26,10 @@ export class InspectProductFetchUseCase implements InspectProductUseCase {
       price: String(data.price),
       stock: String(data.stock),
       image: data.image,
+      category: {
+        label: "",
+        value: "",
+      },
     };
   }
 }

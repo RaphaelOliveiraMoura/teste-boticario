@@ -15,4 +15,10 @@ export const formSchema = z.object({
   price: z.string().trim().min(1, "Preencha o campo"),
   stock: z.string().trim().min(1, "Preencha o campo"),
   image: z.string().trim().min(1, "Preencha o campo"),
+  category: z
+    .object({
+      value: z.string(),
+      label: z.string(),
+    })
+    .refine(({ value }) => !!value, { message: "Preencha o campo" }),
 });

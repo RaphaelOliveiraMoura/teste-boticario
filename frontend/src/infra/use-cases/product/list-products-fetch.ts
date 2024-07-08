@@ -1,3 +1,4 @@
+import { ValidationError } from "@/domain/errors/validation";
 import { HttpClient } from "@/domain/services/http-client";
 import { ListProductsUseCase, Output } from "@/domain/use-cases/product/list";
 
@@ -5,10 +6,14 @@ export class ListProductsFetchUseCase implements ListProductsUseCase {
   constructor(private readonly httpClient: HttpClient) {}
 
   async execute(): Promise<Output> {
-    const { data } = await this.httpClient.request<ApiReturnType>({
+    const { data, status } = await this.httpClient.request<ApiReturnType>({
       method: "GET",
       url: "/products",
     });
+
+    if (status !== 200) {
+      throw new ValidationError();
+    }
 
     return {
       items: data.map((item) => ({

@@ -57,3 +57,4 @@ Alguns tópicos eu gostaria de ter trabalhado melhor, porém acabei não tendo t
 - **Paginação via backend** : Em sistemas maiores seria extremamente importante utilizar uma estratégia de paginação via server side, do modo que foi implementado todos os dados na listagem são carregados de uma só vez, a paginação ocorre apenas em tempo de execução pelo frontend
 - **Filtros e ordenação** : Seria interessante ter funcionalidades de filtragem e ordenação em todas as tabelas do sistema, isso facilita bastante a navegação e visibilidade dos dados em uma lista.
 - **Sonar, husky** : São algumas ferramentas que costumo usar em meus projetos para garantir uma maior qualidade na entrega.
+- **Integração com viacep** : Seria legal uma integração com a api dos correios para fazer o autopreenchimento dos valores de endereço preenchidos pelo usuário

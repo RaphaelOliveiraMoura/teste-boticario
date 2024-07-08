@@ -4,6 +4,7 @@ export interface InspectProductDto {
   description: string;
   price: number;
   stock: number;
+  idCategory: string;
   category: string;
   image: string;
   createdAt: Date;

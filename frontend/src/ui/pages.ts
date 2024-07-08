@@ -4,7 +4,7 @@ export const Pages = {
   SignIn: () => "/auth",
   SignUp: () => "/auth/cadastro",
 
-  ListProducts: () => "/",
+  ListProducts: () => "/produtos",
   InspectProduct: (id: string) => `/produtos/${id}`,
   CreateProduct: () => `/produtos/${CreatePageKey}`,
 

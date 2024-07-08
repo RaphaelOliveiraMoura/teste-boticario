@@ -58,7 +58,7 @@ export const product = {
   inspect: new InspectProductQuery(productDataSource),
   list: new ListProductsQuery(productDataSource),
   create: new CreateProductCommand(productRepository, categoryRepository),
-  update: new UpdateProductCommand(productRepository),
+  update: new UpdateProductCommand(productRepository, categoryRepository),
   delete: new DeleteProductCommand(productRepository),
 };
 

@@ -31,6 +31,7 @@ export class ProductDrizzleDataSource implements IProductDataSource {
       description: result.produto.descricao_produto ?? "",
       price: Number(result.produto.preco_produto),
       stock: Number(result.produto.qtd_estoque),
+      idCategory: String(result.produto.categoria_id),
       category: result.produto.nome_produto ?? "",
       image: result.produto.imagem ?? "",
       createdAt: new Date(result.produto.data_cadastro_produto ?? ""),

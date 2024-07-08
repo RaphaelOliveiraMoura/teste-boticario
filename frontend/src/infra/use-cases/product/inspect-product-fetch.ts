@@ -27,8 +27,8 @@ export class InspectProductFetchUseCase implements InspectProductUseCase {
       stock: String(data.stock),
       image: data.image,
       category: {
-        label: "",
-        value: "",
+        label: data.category,
+        value: data.idCategory,
       },
     };
   }
@@ -40,6 +40,7 @@ type ApiReturnType = {
   description: string;
   price: number;
   stock: number;
+  idCategory: string;
   category: string;
   image: string;
   createdAt: string;

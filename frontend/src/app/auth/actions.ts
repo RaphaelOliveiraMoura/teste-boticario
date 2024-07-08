@@ -24,5 +24,5 @@ export const submit = async (data: Input) => {
     return defaultErrorMessages.default;
   }
 
-  redirect(Pages.ListOrder());
+  redirect(Pages.ListProducts());
 };

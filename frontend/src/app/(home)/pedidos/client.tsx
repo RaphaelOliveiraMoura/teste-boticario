@@ -94,6 +94,9 @@ export function PageClient({ output }: PageClientProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
+              <Link href={Pages.InspectOrder(row.original.id)}>
+                <DropdownMenuItem>Detalhes</DropdownMenuItem>
+              </Link>
               {!row.original.finished && (
                 <DropdownMenuItem
                   onClick={() => setOrderToFinish(row.original)}

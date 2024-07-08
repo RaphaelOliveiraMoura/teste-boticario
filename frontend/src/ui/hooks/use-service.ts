@@ -4,17 +4,18 @@ import { useToast } from "../shadcn/use-toast";
 
 type Props<Input, Output> = {
   submit: (input: Input) => Promise<Output>;
-  onSuccess?: () => void;
+  onSuccess?: (output: Output) => void;
 };
 
-export const useService = <Input, Output extends object>({
+export const useService = <Input, Output extends object | undefined>({
   submit,
+  onSuccess,
 }: Props<Input, Output>) => {
   const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = async (data: Input) => {
+  const onSubmit = (data: Input) =>
     startTransition(async () => {
       const output = await submit(data);
 
@@ -22,9 +23,11 @@ export const useService = <Input, Output extends object>({
         const description =
           "description" in output ? (output.description as string) : undefined;
         toast({ variant: "destructive", title: output.error, description });
+        return;
       }
+
+      onSuccess?.(output);
     });
-  };
 
   return {
     isPending,

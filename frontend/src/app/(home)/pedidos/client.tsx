@@ -22,6 +22,7 @@ import {
 } from "@/ui/shadcn/dropdown-menu";
 import { useToast } from "@/ui/shadcn/use-toast";
 
+import { update } from "./[id]/actions";
 import { remove } from "./actions";
 
 type PageClientProps = {
@@ -40,6 +41,18 @@ export function PageClient({ output }: PageClientProps) {
       onSuccess: () => {
         toast({ title: "Pedido excluído com sucesso", description: "" });
         setOrderToRemove(undefined);
+      },
+    });
+
+  const [orderToFinish, setOrderToFinish] = useState<ListItem | undefined>(
+    undefined,
+  );
+  const { onSubmit: handleFinish, isPending: handleFinishIsPending } =
+    useService({
+      submit: update,
+      onSuccess: () => {
+        toast({ title: "Pedido finalizado com sucesso", description: "" });
+        setOrderToFinish(undefined);
       },
     });
 
@@ -81,9 +94,13 @@ export function PageClient({ output }: PageClientProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <Link href={Pages.InspectOrder(row.original.id)}>
-                <DropdownMenuItem>Editar</DropdownMenuItem>
-              </Link>
+              {!row.original.finished && (
+                <DropdownMenuItem
+                  onClick={() => setOrderToFinish(row.original)}
+                >
+                  Finalizar Pedido
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={() => setOrderToRemove(row.original)}>
                 Excluir
               </DropdownMenuItem>
@@ -116,6 +133,17 @@ export function PageClient({ output }: PageClientProps) {
           description="Essa ação é irreversível, caso queira recuperar o pedido não será mais possível"
           onConfirm={() => handleRemove({ id: orderToRemove.id })}
           isPending={handleRemoveIsPending}
+        />
+      )}
+
+      {orderToFinish && (
+        <ConfirmAlert
+          isOpen={!!orderToFinish}
+          close={() => setOrderToFinish(undefined)}
+          title={`Tem certeza que deseja finalizar o pedido do cliente "${orderToFinish.client}"`}
+          description="Essa ação é irreversível, caso queira reverter o status do pedido não será mais possível"
+          onConfirm={() => handleFinish({ id: orderToFinish.id })}
+          isPending={handleFinishIsPending}
         />
       )}
     </section>

@@ -82,7 +82,10 @@ export class OrderDrizzleRepository implements IOrderRepository {
       for (const product of order.props.products) {
         await tx
           .update(schema.produto)
-          .set({ qtd_estoque: product.props.product.props.stock });
+          .set({ qtd_estoque: product.props.product.props.stock })
+          .where(
+            eq(schema.produto.produto_id, +product.props.product.props.id),
+          );
 
         await tx.insert(schema.produto_pedido).values({
           pedido_id,
@@ -100,7 +103,7 @@ export class OrderDrizzleRepository implements IOrderRepository {
       .set({
         status: order.props.status === OrderEnum.finished ? true : false,
       })
-      .where(eq(schema.pedido, +order.props.id));
+      .where(eq(schema.pedido.pedido_id, +order.props.id));
   }
 
   async remove(id: string): Promise<void> {

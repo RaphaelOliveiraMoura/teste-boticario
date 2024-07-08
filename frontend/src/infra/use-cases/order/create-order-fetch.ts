@@ -15,8 +15,8 @@ export class CreateOrderFetchUseCase implements CreateOrderUseCase {
       url: "/orders",
       body: {
         products: props.products.map((product) => ({
-          id: product.product.value,
-          quantity: product.quantity,
+          idProduct: product.product.value,
+          quantity: Number(product.quantity),
         })),
       },
     });

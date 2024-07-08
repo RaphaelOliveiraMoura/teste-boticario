@@ -2,7 +2,7 @@ import { CreatePageKey } from "@/ui/pages";
 
 import { handle } from "./actions";
 import { PageClient } from "./client";
-import { handle as handleCategories } from "../../categorias/actions";
+import { handle as handleProducts } from "../../produtos/actions";
 
 type PageProps = {
   params: {
@@ -19,10 +19,10 @@ export default async function Page({ params }: PageProps) {
     return <>erro ao carregar detalhes do produto</>;
   }
 
-  const categories = await handleCategories();
+  const products = await handleProducts();
 
-  if (categories && "error" in categories) {
-    return <>erro ao carregar categorias</>;
+  if (products && "error" in products) {
+    return <>erro ao carregar produtos</>;
   }
 
   return (
@@ -32,15 +32,15 @@ export default async function Page({ params }: PageProps) {
         isCreating={isCreating}
         defaultValues={
           output ?? {
-            name: "",
-            image: "",
-            price: "",
-            stock: "",
-            description: "",
-            category: { label: "", value: "" },
+            products: [
+              {
+                quantity: "1",
+                product: { label: "", value: "" },
+              },
+            ],
           }
         }
-        categories={categories.items}
+        products={products.items}
       />
     </div>
   );

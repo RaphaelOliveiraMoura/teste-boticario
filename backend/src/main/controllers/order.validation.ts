@@ -13,7 +13,6 @@ export const validateBody = async (body: OrderBody) => {
     errors.push("products must have at least one item");
 
   body.products.forEach((product) => {
-    if (!product.name) errors.push("product.name is required");
     if (!product.quantity) errors.push("product.quantity is required");
     if (!product.idProduct) errors.push("product.idProduct is required");
   });

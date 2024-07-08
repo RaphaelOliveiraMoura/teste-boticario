@@ -1,12 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftCircle } from "lucide-react";
+import { ArrowLeftCircle, MinusCircle, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
-import { ListItem as CategoryItem } from "@/domain/use-cases/category/list";
 import { FormType, formSchema } from "@/domain/use-cases/order/create";
+import { ListItem as ProductItem } from "@/domain/use-cases/product/list";
+import { justNumbers } from "@/infra/services/masks";
 import { Form } from "@/ui/components/form";
 import { InputSelect } from "@/ui/components/input-select";
 import { InputText } from "@/ui/components/input-text";
@@ -22,14 +23,14 @@ type PageClientProps = {
   id: string;
   defaultValues: FormType;
   isCreating: boolean;
-  categories: CategoryItem[];
+  products: ProductItem[];
 };
 
 export function PageClient({
   defaultValues,
   isCreating,
   id,
-  categories,
+  products,
 }: PageClientProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -53,6 +54,11 @@ export function PageClient({
     defaultValues,
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "products",
+  });
+
   return (
     <section>
       <header className="mb-8 flex items-center gap-4">
@@ -68,36 +74,62 @@ export function PageClient({
 
       <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-[1fr_2fr] gap-4">
-            <InputText form={form} label="Nome do produto" name="name" />
-            <InputText
-              form={form}
-              label="Descrição do produto"
-              name="description"
-            />
-          </div>
+          <ul className="m-auto flex w-full max-w-[800px] flex-col gap-4">
+            <li className="grid w-full grid-cols-[2fr_1fr_40px] gap-6 font-bold">
+              <span>Produto</span>
+              <span>Quantidade</span>
+              <div></div>
+            </li>
+            {fields.map((field, index) => (
+              <li
+                key={field.id}
+                className="grid w-full grid-cols-[2fr_1fr_auto] gap-6"
+              >
+                <InputSelect
+                  form={form}
+                  label=""
+                  name={`products.${index}.product`}
+                  showClearOption={false}
+                  options={products.map((product) => ({
+                    label: product.name,
+                    value: product.id,
+                  }))}
+                />
+                <InputText
+                  form={form}
+                  label=""
+                  name={`products.${index}.quantity`}
+                  type="number"
+                  mask={justNumbers}
+                />
 
-          <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4">
-            <InputSelect
-              form={form}
-              label="Categoria"
-              name="category"
-              options={categories.map((category) => ({
-                label: category.name,
-                value: category.id,
-              }))}
-            />
-            <InputText
-              form={form}
-              label="URL com imagem do produto"
-              name="image"
-            />
-            <InputText form={form} label="Valor do produto" name="price" />
-            <InputText form={form} label="Quantidade em estoque" name="stock" />
-          </div>
+                <Button
+                  size="icon"
+                  onClick={() => remove(index)}
+                  className="mt-2"
+                >
+                  <MinusCircle />
+                </Button>
+              </li>
+            ))}
+            <li>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  append({
+                    quantity: "1",
+                    product: { label: "", value: "" },
+                  })
+                }
+              >
+                <PlusCircle className="mr-2" />
+                Adicionar produto
+              </Button>
+            </li>
+          </ul>
 
           <Button disabled={isPending} type="submit" className="self-end">
-            {isCreating ? "Cadastrar" : "Atualizar"}
+            {isCreating ? "Finalizar pedido" : "Atualizar"}
           </Button>
         </div>
       </Form>

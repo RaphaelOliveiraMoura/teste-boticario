@@ -26,7 +26,7 @@ export class HttpClientFetch implements HttpClient {
     const response = await fetch(this.baseUrl + params.url, {
       method: params.method,
       headers: {
-        "Content-Type": "application/json",
+        ...(body ? { "Content-Type": "application/json" } : {}),
         Authorization: token?.value ?? "",
         ...params.headers,
       },

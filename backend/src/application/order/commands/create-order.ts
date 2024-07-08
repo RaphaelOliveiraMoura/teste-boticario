@@ -43,7 +43,7 @@ export class CreateOrderCommand implements UseCase<Input, void> {
     const order = new Order({
       id: "",
       ...input,
-      code: String(Math.random() * 1000), // todo: fix
+      code: String(parseInt(String(Math.random() * 1000))), // todo: fix
       status: OrderEnum.pending,
       createdAt: new Date(),
       products,

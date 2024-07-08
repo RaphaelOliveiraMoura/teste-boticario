@@ -11,4 +11,12 @@ export const Pages = {
   ListCategories: () => "/categorias",
   InspectCategory: (id: string) => `/categorias/${id}`,
   CreateCategory: () => `/categorias/${CreatePageKey}`,
+
+  ListClients: () => "/clientes",
+  InspectClient: (id: string) => `/clientes/${id}`,
+  CreateClient: () => `/clientes/${CreatePageKey}`,
+
+  ListOrders: () => "/pedidos",
+  InspectOrder: (id: string) => `/pedidos/${id}`,
+  CreateOrder: () => `/pedidos/${CreatePageKey}`,
 };

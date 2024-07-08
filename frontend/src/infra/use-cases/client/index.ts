@@ -1,0 +1,10 @@
+export { CreateClientFetchUseCase } from "@/infra/use-cases/client/create-client-fetch";
+export { CreateClientMemoryUseCase } from "@/infra/use-cases/client/create-client-memory";
+export { DeleteClientFetchUseCase } from "@/infra/use-cases/client/delete-client-fetch";
+export { DeleteClientMemoryUseCase } from "@/infra/use-cases/client/delete-client-memory";
+export { InspectClientFetchUseCase } from "@/infra/use-cases/client/inspect-client-fetch";
+export { InspectClientMemoryUseCase } from "@/infra/use-cases/client/inspect-client-memory";
+export { ListClientsFetchUseCase } from "@/infra/use-cases/client/list-clients-fetch";
+export { ListClientsMemoryUseCase } from "@/infra/use-cases/client/list-clients-memory";
+export { UpdateClientFetchUseCase } from "@/infra/use-cases/client/update-client-fetch";
+export { UpdateClientMemoryUseCase } from "@/infra/use-cases/client/update-client-memory";

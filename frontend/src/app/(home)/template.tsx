@@ -20,6 +20,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
             {[
               { href: Pages.ListProducts(), name: "Produtos" },
               { href: Pages.ListCategories(), name: "Categorias" },
+              { href: Pages.ListClients(), name: "Clientes" },
+              { href: Pages.ListOrders(), name: "Pedidos" },
             ].map((item) => (
               <li key={item.name}>
                 <Link href={item.href}>{item.name}</Link>

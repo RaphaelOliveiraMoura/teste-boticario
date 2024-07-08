@@ -18,10 +18,9 @@ export class InspectProductFetchUseCase implements InspectProductUseCase {
       id: data.id,
       name: data.name,
       description: data.description,
-      price: data.price,
-      stock: data.stock,
+      price: String(data.price),
+      stock: String(data.stock),
       image: data.image,
-      createdAt: data.createdAt,
     };
   }
 }

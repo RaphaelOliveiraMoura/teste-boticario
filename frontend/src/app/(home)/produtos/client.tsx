@@ -91,7 +91,8 @@ export function PageClient({ output }: PageClientProps) {
 
   return (
     <section>
-      <div className="my-4 flex justify-end">
+      <div className="my-4 flex items-center justify-between">
+        <h1 className="text-xl">Listagem de Produtos</h1>
         <Link href={Pages.CreateProduct()}>
           <Button>
             <PlusCircle className="mr-2" />

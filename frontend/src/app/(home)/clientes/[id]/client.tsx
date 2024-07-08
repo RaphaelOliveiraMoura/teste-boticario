@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { ListItem as CategoryItem } from "@/domain/use-cases/category/list";
-import { FormType, formSchema } from "@/domain/use-cases/product/create";
+import { FormType, formSchema } from "@/domain/use-cases/client/create";
 import { Form } from "@/ui/components/form";
 import { InputSelect } from "@/ui/components/input-select";
 import { InputText } from "@/ui/components/input-text";
@@ -37,7 +37,7 @@ export function PageClient({
   const { isPending, onSubmit } = useService({
     submit: isCreating ? create : (form: FormType) => update({ ...form, id }),
     onSuccess: () => {
-      router.push(Pages.ListProducts());
+      router.push(Pages.ListClients());
 
       if (isCreating) {
         toast({ title: "Item cadastrado com sucesso" });
@@ -57,7 +57,7 @@ export function PageClient({
     <section>
       <header className="mb-8 flex items-center gap-4">
         <Button size="icon" variant="ghost">
-          <Link href={Pages.ListProducts()}>
+          <Link href={Pages.ListClients()}>
             <ArrowLeftCircle />
           </Link>
         </Button>

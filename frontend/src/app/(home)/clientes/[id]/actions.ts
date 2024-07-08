@@ -2,16 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 
-import { Input as InputCreate } from "@/domain/use-cases/product/create";
-import { Input as InputInspect } from "@/domain/use-cases/product/inspect";
-import { Input as InputUpdate } from "@/domain/use-cases/product/update";
+import { Input as InputCreate } from "@/domain/use-cases/client/create";
+import { Input as InputInspect } from "@/domain/use-cases/client/inspect";
+import { Input as InputUpdate } from "@/domain/use-cases/client/update";
 import { errorHandler } from "@/infra/services/error-handler";
-import { product } from "@/main/use-cases";
+import { client } from "@/main/use-cases";
 import { Pages } from "@/ui/pages";
 
 export const handle = async (input: InputInspect) => {
   try {
-    return await product.inspect.execute(input);
+    return await client.inspect.execute(input);
   } catch (error) {
     return errorHandler(error);
   }
@@ -19,8 +19,8 @@ export const handle = async (input: InputInspect) => {
 
 export const create = async (input: InputCreate) => {
   try {
-    await product.create.execute(input);
-    revalidatePath(Pages.ListProducts());
+    await client.create.execute(input);
+    revalidatePath(Pages.ListClients());
   } catch (error) {
     return errorHandler(error);
   }
@@ -28,9 +28,9 @@ export const create = async (input: InputCreate) => {
 
 export const update = async (input: InputUpdate) => {
   try {
-    await product.update.execute(input);
-    revalidatePath(Pages.ListProducts());
-    revalidatePath(Pages.InspectProduct(input.id));
+    await client.update.execute(input);
+    revalidatePath(Pages.ListClients());
+    revalidatePath(Pages.InspectClient(input.id));
   } catch (error) {
     return errorHandler(error);
   }

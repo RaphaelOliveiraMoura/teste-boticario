@@ -4,8 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
-import { ListItem, Output } from "@/domain/use-cases/product/list";
-import { formatCurrency, formatDate } from "@/infra/services/formatters";
+import { ListItem, Output } from "@/domain/use-cases/client/list";
+import { formatDate } from "@/infra/services/formatters";
+import { cpfMask } from "@/infra/services/masks";
 import { ConfirmAlert } from "@/ui/components/confim-alert";
 import { DataTable } from "@/ui/components/data-table";
 import { Link } from "@/ui/components/link";
@@ -30,15 +31,15 @@ type PageClientProps = {
 export function PageClient({ output }: PageClientProps) {
   const { toast } = useToast();
 
-  const [productToRemove, setProductToRemove] = useState<ListItem | undefined>(
+  const [clientToRemove, setClientToRemove] = useState<ListItem | undefined>(
     undefined,
   );
   const { onSubmit: handleRemove, isPending: handleRemoveIsPending } =
     useService({
       submit: remove,
       onSuccess: () => {
-        toast({ title: "Produto excluído com sucesso", description: "" });
-        setProductToRemove(undefined);
+        toast({ title: "Cliente excluído com sucesso", description: "" });
+        setClientToRemove(undefined);
       },
     });
 
@@ -48,18 +49,18 @@ export function PageClient({ output }: PageClientProps) {
       header: "Nome",
     },
     {
-      accessorKey: "price",
-      header: "Preço",
-      cell: ({ row }) => formatCurrency(row.getValue("price")),
+      accessorKey: "cpf",
+      header: "CPF",
+      cell: ({ row }) => cpfMask(row.getValue("cpf")),
     },
     {
-      accessorKey: "stock",
-      header: "Qtd. Estoque",
+      accessorKey: "email",
+      header: "E-mail",
     },
     {
-      accessorKey: "createdAt",
-      header: "Data de cadastro",
-      cell: ({ row }) => formatDate(new Date(row.getValue("createdAt"))),
+      accessorKey: "birthDate",
+      header: "Data de nascimento",
+      cell: ({ row }) => formatDate(new Date(row.getValue("birthDate"))),
     },
     {
       id: "actions",
@@ -74,12 +75,10 @@ export function PageClient({ output }: PageClientProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <Link href={Pages.InspectProduct(row.original.id)}>
+              <Link href={Pages.InspectClient(row.original.id)}>
                 <DropdownMenuItem>Editar</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem
-                onClick={() => setProductToRemove(row.original)}
-              >
+              <DropdownMenuItem onClick={() => setClientToRemove(row.original)}>
                 Excluir
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -91,8 +90,9 @@ export function PageClient({ output }: PageClientProps) {
 
   return (
     <section>
-      <div className="my-4 flex justify-end">
-        <Link href={Pages.CreateProduct()}>
+      <div className="my-4 flex items-center justify-between">
+        <h1 className="text-xl">Listagem de Clientes</h1>
+        <Link href={Pages.CreateClient()}>
           <Button>
             <PlusCircle className="mr-2" />
             Adicionar
@@ -102,13 +102,13 @@ export function PageClient({ output }: PageClientProps) {
 
       <DataTable data={output.items} columns={columns} />
 
-      {productToRemove && (
+      {clientToRemove && (
         <ConfirmAlert
-          isOpen={!!productToRemove}
-          close={() => setProductToRemove(undefined)}
-          title={`Tem certeza que deseja excluir o item "${productToRemove.name}"`}
-          description="Essa ação é irreversível, caso queira recuperar o produto não será mais possível"
-          onConfirm={() => handleRemove({ id: productToRemove.id })}
+          isOpen={!!clientToRemove}
+          close={() => setClientToRemove(undefined)}
+          title={`Tem certeza que deseja excluir o item "${clientToRemove.name}"`}
+          description="Essa ação é irreversível, caso queira recuperar o cliente não será mais possível"
+          onConfirm={() => handleRemove({ id: clientToRemove.id })}
           isPending={handleRemoveIsPending}
         />
       )}

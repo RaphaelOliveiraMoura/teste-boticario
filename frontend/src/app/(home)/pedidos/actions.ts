@@ -1,12 +1,12 @@
 "use server";
 
-import { Input } from "@/domain/use-cases/product/delete";
+import { Input } from "@/domain/use-cases/order/delete";
 import { errorHandler } from "@/infra/services/error-handler";
-import { product } from "@/main/use-cases";
+import { order } from "@/main/use-cases";
 
 export const handle = async () => {
   try {
-    return await product.list.execute();
+    return await order.list.execute();
   } catch (error) {
     return errorHandler(error);
   }
@@ -14,7 +14,7 @@ export const handle = async () => {
 
 export const remove = async (input: Input) => {
   try {
-    await product.delete.execute(input);
+    await order.delete.execute(input);
   } catch (error) {
     return errorHandler(error);
   }

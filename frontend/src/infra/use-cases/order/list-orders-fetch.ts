@@ -16,15 +16,22 @@ export class ListOrdersFetchUseCase implements ListOrdersUseCase {
     }
 
     return {
-      items: data.map(() => ({
-        id: "",
-        client: "",
-        price: 0,
-        date: new Date().toISOString(),
-        finished: false,
+      items: data.map((item) => ({
+        id: item.id,
+        client: item.client,
+        price: item.totalPrice,
+        date: new Date(item.createdAt).toISOString(),
+        finished: item.status === "finished",
       })),
     };
   }
 }
 
-type ApiReturnType = {}[];
+type ApiReturnType = {
+  id: string;
+  code: string;
+  totalPrice: number;
+  createdAt: Date;
+  status: string;
+  client: string;
+}[];

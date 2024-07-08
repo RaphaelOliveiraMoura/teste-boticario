@@ -1,3 +1,4 @@
+import { InvalidAuthError } from "@/domain/errors/invliad-auth";
 import { IConfigService } from "@/domain/services/config";
 import { HttpClient } from "@/domain/services/http-client";
 
@@ -21,7 +22,12 @@ export class HttpClientFetch implements HttpClient {
     });
 
     const data = await response.json();
+    const status = response.status;
 
-    return { data, status: response.status };
+    if (status === 401) {
+      throw new InvalidAuthError();
+    }
+
+    return { data, status };
   }
 }

@@ -7,7 +7,7 @@ type Props<Input, Output> = {
   onSuccess?: (output: Output) => void;
 };
 
-export const useService = <Input, Output extends object | undefined>({
+export const useService = <Input, Output extends object | void>({
   submit,
   onSuccess,
 }: Props<Input, Output>) => {

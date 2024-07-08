@@ -7,4 +7,8 @@ export const defaultErrorMessages = {
     error: "Erro na validação de dados",
     description: "Verifique se preencheu os dados corretamente",
   },
+  auth: {
+    error: "Você precisa realizar login para acessar essa funcionalidade",
+    description: "",
+  },
 };

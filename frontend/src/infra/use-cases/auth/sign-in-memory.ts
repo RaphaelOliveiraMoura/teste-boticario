@@ -1,4 +1,4 @@
-import { InvalidCredentialsError } from "@/domain/errors/auth";
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials";
 import { SignInUseCase, Input, Output } from "@/domain/use-cases/sign-in";
 import { freeze } from "@/infra/utils/freeze";
 

@@ -1,3 +1,8 @@
+import { CreateCategoryUseCase } from "@/domain/use-cases/category/create";
+import { DeleteCategoryUseCase } from "@/domain/use-cases/category/delete";
+import { InspectCategoryUseCase } from "@/domain/use-cases/category/inspect";
+import { ListCategoriesUseCase } from "@/domain/use-cases/category/list";
+import { UpdateCategoryUseCase } from "@/domain/use-cases/category/update";
 import { CreateProductUseCase } from "@/domain/use-cases/product/create";
 import { DeleteProductUseCase } from "@/domain/use-cases/product/delete";
 import { InspectProductUseCase } from "@/domain/use-cases/product/inspect";
@@ -9,6 +14,16 @@ import { SignInFetchUseCase } from "@/infra/use-cases/auth/sign-in-fetch";
 import { SignInMemoryUseCase } from "@/infra/use-cases/auth/sign-in-memory";
 import { SignUpFetchUseCase } from "@/infra/use-cases/auth/sign-up-fetch";
 import { SignUpMemoryUseCase } from "@/infra/use-cases/auth/sign-up-memory";
+import { CreateCategoryFetchUseCase } from "@/infra/use-cases/category/create-category-fetch";
+import { CreateCategoryMemoryUseCase } from "@/infra/use-cases/category/create-category-memory";
+import { DeleteCategoryFetchUseCase } from "@/infra/use-cases/category/delete-category-fetch";
+import { DeleteCategoryMemoryUseCase } from "@/infra/use-cases/category/delete-category-memory";
+import { InspectCategoryFetchUseCase } from "@/infra/use-cases/category/inspect-category-fetch";
+import { InspectCategoryMemoryUseCase } from "@/infra/use-cases/category/inspect-category-memory";
+import { ListCategoriesFetchUseCase } from "@/infra/use-cases/category/list-category-fetch";
+import { ListCategoriesMemoryUseCase } from "@/infra/use-cases/category/list-category-memory";
+import { UpdateCategoryFetchUseCase } from "@/infra/use-cases/category/update-category-fetch";
+import { UpdateCategoryMemoryUseCase } from "@/infra/use-cases/category/update-category-memory";
 import { CreateProductFetchUseCase } from "@/infra/use-cases/product/create-product-fetch";
 import { CreateProductMemoryUseCase } from "@/infra/use-cases/product/create-product-memory";
 import { DeleteProductFetchUseCase } from "@/infra/use-cases/product/delete-product-fetch";
@@ -55,5 +70,28 @@ export const product = {
   inspect: new MockStrategyUseCase<InspectProductUseCase>()
     .set(new InspectProductFetchUseCase(httpClient))
     .mock(new InspectProductMemoryUseCase())
+    .build(),
+};
+
+export const category = {
+  create: new MockStrategyUseCase<CreateCategoryUseCase>()
+    .set(new CreateCategoryFetchUseCase(httpClient))
+    .mock(new CreateCategoryMemoryUseCase())
+    .build(),
+  update: new MockStrategyUseCase<UpdateCategoryUseCase>()
+    .set(new UpdateCategoryFetchUseCase(httpClient))
+    .mock(new UpdateCategoryMemoryUseCase())
+    .build(),
+  delete: new MockStrategyUseCase<DeleteCategoryUseCase>()
+    .set(new DeleteCategoryFetchUseCase(httpClient))
+    .mock(new DeleteCategoryMemoryUseCase())
+    .build(),
+  list: new MockStrategyUseCase<ListCategoriesUseCase>()
+    .set(new ListCategoriesFetchUseCase(httpClient))
+    .mock(new ListCategoriesMemoryUseCase())
+    .build(),
+  inspect: new MockStrategyUseCase<InspectCategoryUseCase>()
+    .set(new InspectCategoryFetchUseCase(httpClient))
+    .mock(new InspectCategoryMemoryUseCase())
     .build(),
 };

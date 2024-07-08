@@ -8,7 +8,7 @@ export const Pages = {
   InspectProduct: (id: string) => `/produtos/${id}`,
   CreateProduct: () => `/produtos/${CreatePageKey}`,
 
-  ListCategories: () => "/",
+  ListCategories: () => "/categorias",
   InspectCategory: (id: string) => `/categorias/${id}`,
   CreateCategory: () => `/categorias/${CreatePageKey}`,
 };

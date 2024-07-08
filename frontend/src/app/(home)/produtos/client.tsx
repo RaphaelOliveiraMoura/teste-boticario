@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
 import { ListItem, Output } from "@/domain/use-cases/product/list";
@@ -91,6 +91,15 @@ export function PageClient({ output }: PageClientProps) {
 
   return (
     <section>
+      <div className="my-4 flex justify-end">
+        <Link href={Pages.CreateProduct()}>
+          <Button>
+            <PlusCircle className="mr-2" />
+            Adicionar
+          </Button>
+        </Link>
+      </div>
+
       <DataTable data={output.items} columns={columns} />
 
       {productToRemove && (

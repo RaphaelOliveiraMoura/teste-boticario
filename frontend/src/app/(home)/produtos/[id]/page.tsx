@@ -2,7 +2,7 @@ import { CreatePageKey } from "@/ui/pages";
 
 import { handle } from "./actions";
 import { PageClient } from "./client";
-import { handle as handleCategories } from "../../categories/actions";
+import { handle as handleCategories } from "../../categorias/actions";
 
 type PageProps = {
   params: {

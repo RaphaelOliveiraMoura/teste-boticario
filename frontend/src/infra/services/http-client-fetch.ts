@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 import { InvalidAuthError } from "@/domain/errors/invliad-auth";
 import { IConfigService } from "@/domain/services/config";
 import { HttpClient } from "@/domain/services/http-client";
@@ -15,9 +17,15 @@ export class HttpClientFetch implements HttpClient {
     headers?: Record<string, string> | undefined;
     body?: any;
   }): Promise<{ data: T; status: number }> {
+    const token = cookies().get("token");
+
     const response = await fetch(this.baseUrl + params.url, {
       method: params.method,
-      headers: params.headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token?.value ?? "",
+        ...params.headers,
+      },
       body: params.body ? JSON.stringify(params.body) : undefined,
     });
 

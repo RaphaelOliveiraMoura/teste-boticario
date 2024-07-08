@@ -11,6 +11,7 @@ import { useService } from "@/ui/hooks/use-service";
 import { Pages } from "@/ui/pages";
 import { Button } from "@/ui/shadcn/button";
 import {
+  Card,
   CardContent,
   CardDescription,
   CardFooter,
@@ -33,7 +34,7 @@ export default function Page() {
   });
 
   return (
-    <>
+    <Card>
       <CardHeader>
         <CardTitle>Faça seu login</CardTitle>
         <CardDescription>
@@ -42,7 +43,7 @@ export default function Page() {
       </CardHeader>
       <CardContent>
         <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <InputText form={form} label="Usuário" name="username" />
             <InputText
               form={form}
@@ -58,8 +59,10 @@ export default function Page() {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Link href={Pages.SignUp()}>Não possuo cadastro</Link>
+        <Link className="text-sm" href={Pages.SignUp()}>
+          Não possuo cadastro
+        </Link>
       </CardFooter>
-    </>
+    </Card>
   );
 }

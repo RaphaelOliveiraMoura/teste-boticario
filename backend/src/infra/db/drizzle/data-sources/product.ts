@@ -34,7 +34,9 @@ export class ProductDrizzleDataSource implements IProductDataSource {
       idCategory: String(result.produto.categoria_id),
       category: result.produto.nome_produto ?? "",
       image: result.produto.imagem ?? "",
-      createdAt: new Date(result.produto.data_cadastro_produto ?? ""),
+      createdAt: new Date(
+        result.produto.data_cadastro_produto ?? "",
+      ).toISOString(),
     };
   }
 
@@ -55,7 +57,9 @@ export class ProductDrizzleDataSource implements IProductDataSource {
       stock: Number(result.produto.qtd_estoque),
       category: result.produto.nome_produto ?? "",
       image: result.produto.imagem ?? "",
-      createdAt: new Date(result.produto.data_cadastro_produto ?? ""),
+      createdAt: new Date(
+        result.produto.data_cadastro_produto ?? "",
+      ).toISOString(),
     }));
   }
 }

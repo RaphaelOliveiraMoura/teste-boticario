@@ -51,7 +51,7 @@ export function PageClient({ output }: PageClientProps) {
     {
       accessorKey: "cpf",
       header: "CPF",
-      cell: ({ row }) => cpfMask(row.getValue("cpf")),
+      cell: ({ row }) => cpfMask(row.original.cpf),
     },
     {
       accessorKey: "email",
@@ -60,7 +60,7 @@ export function PageClient({ output }: PageClientProps) {
     {
       accessorKey: "birthDate",
       header: "Data de nascimento",
-      cell: ({ row }) => formatDate(new Date(row.getValue("birthDate"))),
+      cell: ({ row }) => formatDate(new Date(row.original.birthDate)),
     },
     {
       id: "actions",

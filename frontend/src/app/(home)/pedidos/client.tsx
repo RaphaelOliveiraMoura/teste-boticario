@@ -51,12 +51,12 @@ export function PageClient({ output }: PageClientProps) {
     {
       accessorKey: "price",
       header: "Preço",
-      cell: ({ row }) => formatCurrency(row.getValue("price")),
+      cell: ({ row }) => formatCurrency(row.original.price),
     },
     {
-      accessorKey: "createdAt",
+      accessorKey: "date",
       header: "Data de cadastro",
-      cell: ({ row }) => formatDate(new Date(row.getValue("createdAt"))),
+      cell: ({ row }) => formatDate(new Date(row.original.date)),
     },
     {
       accessorKey: "Status",

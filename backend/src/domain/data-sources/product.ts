@@ -7,7 +7,7 @@ export interface InspectProductDto {
   idCategory: string;
   category: string;
   image: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface ListProductDto {
@@ -18,7 +18,7 @@ export interface ListProductDto {
   stock: number;
   category: string;
   image: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface IProductDataSource {

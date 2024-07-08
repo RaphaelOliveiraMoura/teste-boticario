@@ -39,7 +39,7 @@ export class OrderDrizzleDataSource implements IOrderDataSource {
       id: String(result.pedido.cliente_id),
       code: String(result.pedido.numero_pedido),
       status: result.pedido.status ? OrderEnum.finished : OrderEnum.pending,
-      createdAt: new Date(result.pedido.data_pedido),
+      createdAt: new Date(result.pedido.data_pedido).toISOString(),
       totalPrice: Number(result.pedido.valor_total_pedido ?? 0),
       client: result.cliente.nome ?? "",
       products: products.map(({ produto, produto_pedido }) => {
@@ -66,7 +66,7 @@ export class OrderDrizzleDataSource implements IOrderDataSource {
       id: String(result.pedido.cliente_id),
       code: String(result.pedido.numero_pedido),
       status: result.pedido.status ? OrderEnum.finished : OrderEnum.pending,
-      createdAt: new Date(result.pedido.data_pedido),
+      createdAt: new Date(result.pedido.data_pedido).toISOString(),
       totalPrice: Number(result.pedido.valor_total_pedido ?? 0),
       client: result.cliente.nome ?? "",
     }));

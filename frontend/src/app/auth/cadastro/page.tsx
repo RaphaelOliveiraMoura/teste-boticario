@@ -5,16 +5,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { formSchema, Input } from "@/domain/use-cases/sign-up";
-import {
-  cepMask,
-  cpfMask,
-  dateMask,
-  onlyTextWithLimit,
-  phoneMask,
-} from "@/infra/services/masks";
 import { Form } from "@/ui/components/form";
-import { InputText } from "@/ui/components/input-text";
 import { Link } from "@/ui/components/link";
+import { ClientForm } from "@/ui/containers/client-form";
 import { useService } from "@/ui/hooks/use-service";
 import { Pages } from "@/ui/pages";
 import { Button } from "@/ui/shadcn/button";
@@ -25,7 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/ui/shadcn/card";
-import { Separator } from "@/ui/shadcn/separator";
 import { useToast } from "@/ui/shadcn/use-toast";
 
 import { submit } from "./actions";
@@ -82,65 +74,7 @@ export default function Page() {
       <CardContent>
         <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <InputText form={form} label="E-mail" name="email" />
-              <InputText form={form} label="Nome" name="name" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <InputText
-                form={form}
-                label="Nome de usuário para login"
-                name="username"
-              />
-              <InputText
-                form={form}
-                label="Senha"
-                name="password"
-                type="password"
-              />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <InputText form={form} label="CPF" name="cpf" mask={cpfMask} />
-              <InputText
-                form={form}
-                label="Telefone"
-                name="phone"
-                mask={phoneMask}
-              />
-              <InputText
-                form={form}
-                label="Data de nascimento"
-                name="birthDate"
-                mask={dateMask}
-              />
-            </div>
-
-            <Separator className="my-4" />
-            <h3 className="font-bold">Informações de Endereço</h3>
-
-            <div className="grid grid-cols-3 gap-4">
-              <InputText form={form} label="CEP" name="cep" mask={cepMask} />
-              <InputText
-                form={form}
-                label="Estado"
-                name="state"
-                mask={(value) => onlyTextWithLimit(2)(value).toUpperCase()}
-              />
-              <InputText form={form} label="Cidade" name="city" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <InputText form={form} label="Bairro" name="neighborhood" />
-              <InputText form={form} label="Rua" name="address" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <InputText form={form} label="Número" name="number" />
-              <InputText form={form} label="Complemento" name="complement" />
-            </div>
-
+            <ClientForm form={form} />
             <Button disabled={isPending} type="submit">
               Cadastrar
             </Button>

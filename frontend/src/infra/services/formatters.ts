@@ -8,3 +8,8 @@ export const formatCurrency = (value: number) => {
 export const formatDate = (date: Date) => {
   return date.toLocaleDateString("pt-BR");
 };
+
+export const formatDateIso = (date: string) => {
+  const [day, month, year] = date.split("/").map(Number);
+  return new Date(year, month, day).toISOString();
+};

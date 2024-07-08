@@ -75,7 +75,7 @@ export function PageClient({ output }: PageClientProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <Link href={Pages.InspectProduct(row.original.id)}>
-                <DropdownMenuItem>Detalhes</DropdownMenuItem>
+                <DropdownMenuItem>Editar</DropdownMenuItem>
               </Link>
               <DropdownMenuItem
                 onClick={() => setProductToRemove(row.original)}

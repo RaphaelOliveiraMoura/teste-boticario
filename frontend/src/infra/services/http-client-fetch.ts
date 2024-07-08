@@ -19,6 +19,10 @@ export class HttpClientFetch implements HttpClient {
   }): Promise<{ data: T; status: number }> {
     const token = cookies().get("token");
 
+    const body = params.body ? JSON.stringify(params.body) : undefined;
+
+    console.info(`[${params.url}]`, { body });
+
     const response = await fetch(this.baseUrl + params.url, {
       method: params.method,
       headers: {
@@ -26,11 +30,13 @@ export class HttpClientFetch implements HttpClient {
         Authorization: token?.value ?? "",
         ...params.headers,
       },
-      body: params.body ? JSON.stringify(params.body) : undefined,
+      body,
     });
 
     const data = await response.json();
     const status = response.status;
+
+    console.info(`[${params.url}]`, { data, status });
 
     if (status === 401) {
       throw new InvalidAuthError();

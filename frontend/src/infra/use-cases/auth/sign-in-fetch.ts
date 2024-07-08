@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials";
 import { HttpClient } from "@/domain/services/http-client";
 import { SignInUseCase, Input, Output } from "@/domain/use-cases/sign-in";
@@ -19,6 +21,10 @@ export class SignInFetchUseCase implements SignInUseCase {
       throw new InvalidCredentialsError();
     }
 
-    return { token: response.data.token };
+    const token = response.data.token;
+
+    cookies().set("token", token);
+
+    return { token };
   }
 }

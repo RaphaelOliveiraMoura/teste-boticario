@@ -24,7 +24,7 @@ export const create = async (input: InputCreate) => {
 
 export const update = async (input: InputUpdate) => {
   try {
-    await product.delete.execute(input);
+    await product.update.execute(input);
   } catch (error) {
     return errorHandler(error);
   }
